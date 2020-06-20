@@ -175,6 +175,25 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.25], [0.05]]
       ret.minSteerSpeed = 0.
 
+    elif candidate == CAR.GRANDEUR:
+      ret.lateralTuning.pid.kf = 0.00005
+      ret.mass = 1640. + STD_CARGO_KG
+      ret.wheelbase = 2.845
+      ret.steerRatio = 13.75
+      tire_stiffness_factor = 0.6
+
+      ret.steerActuatorDelay = 0.1
+
+      # pid
+      # ret.lateralTuning.init('pid')
+
+      ret.lateralTuning.pid.kf = 0.00001
+      ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = \
+        [0], [0.25]
+
+      ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = \
+        [0], [0.01]
+
     ret.centerToFront = ret.wheelbase * 0.4
 
     # TODO: get actual value, for now starting with reasonable value for

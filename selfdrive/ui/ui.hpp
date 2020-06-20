@@ -160,6 +160,21 @@ typedef struct UIScene {
   cereal::HealthData::HwType hwType;
   int satelliteCount;
   uint8_t athenaStatus;
+
+  // dev ui
+  uint16_t maxCpuTemp;
+  uint32_t maxBatTemp;
+
+  float angleSteers;
+  float angleSteersDes;
+  bool brakeLights;
+
+  float pid_p;
+  float pid_i;
+  float pid_f;
+  float pid_d;
+  float pid_output;
+
 } UIScene;
 
 typedef struct {

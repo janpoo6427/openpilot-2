@@ -438,6 +438,18 @@ void handle_message(UIState *s,  Message* msg) {
         }
       }
     }
+
+    scene.angleSteers = data.getAngleSteers();
+    scene.angleSteersDes = data.getAngleSteersDes();
+
+    auto l_pid = data.getLateralControlState().getPidState();
+
+    scene.pid_p = l_pid.getP();
+    scene.pid_i = l_pid.getI();
+    scene.pid_f = l_pid.getF();
+    scene.pid_d = l_pid.getD();
+    scene.pid_output = l_pid.getOutput();
+
   } else if (which == cereal::Event::RADAR_STATE) {
     auto data = event.getRadarState();
 
@@ -492,6 +504,16 @@ void handle_message(UIState *s,  Message* msg) {
     scene.freeSpace = data.getFreeSpace();
     scene.thermalStatus = data.getThermalStatus();
     scene.paTemp = data.getPa0();
+
+    scene.maxCpuTemp = data.getCpu1();
+    if (scene.maxCpuTemp < data.getCpu1())
+      scene.maxCpuTemp = data.getCpu1();
+    else if (scene.maxCpuTemp < data.getCpu2())
+      scene.maxCpuTemp = data.getCpu2();
+    else if (scene.maxCpuTemp < data.getCpu3())
+      scene.maxCpuTemp = data.getCpu3();
+
+    scene.maxBatTemp = data.getBat();
 
     s->thermal_started = data.getStarted();
   } else if (which == cereal::Event::UBLOX_GNSS) {

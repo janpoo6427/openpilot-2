@@ -584,6 +584,7 @@ struct ControlsState @0x97ff69c53601abf1 {
     p @4 :Float32;
     i @5 :Float32;
     f @6 :Float32;
+    d @9 :Float32;
     output @7 :Float32;
     saturated @8 :Bool;
    }

@@ -1,3 +1,4 @@
+import time
 import numpy as np
 from common.numpy_fast import clip, interp
 
@@ -16,6 +17,8 @@ class PIController():
     self._k_i = k_i # integral gain
     self.k_f = k_f  # feedforward gain
 
+    self.k_d = 0.005
+
     self.pos_limit = pos_limit
     self.neg_limit = neg_limit
 
@@ -24,6 +27,8 @@ class PIController():
     self.i_rate = 1.0 / rate
     self.sat_limit = sat_limit
     self.convert = convert
+    self.previous_error = None
+    self.previous_time = None
 
     self.reset()
 
@@ -51,9 +56,13 @@ class PIController():
     self.p = 0.0
     self.i = 0.0
     self.f = 0.0
+    self.d = 0.0
     self.sat_count = 0.0
     self.saturated = False
     self.control = 0
+
+    self.previous_error = None
+    self.previous_time = None
 
   def update(self, setpoint, measurement, speed=0.0, check_saturation=True, override=False, feedforward=0., deadzone=0., freeze_integrator=False):
     self.speed = speed
@@ -79,10 +88,29 @@ class PIController():
         self.i = i
 
     control = self.p + self.f + self.i
+
+    # neokii
+    current_time = time.time()
+
+    if self.previous_time is not None and self.previous_error is not None:
+      dt = current_time - self.previous_time
+
+      if dt > 0.0:
+        de = error - self.previous_error
+        cd = de / dt
+
+        self.d = cd * self.k_d
+
+        control += self.d
+
+    self.previous_time = current_time
+    self.previous_error = error
+
     if self.convert is not None:
       control = self.convert(control, speed=self.speed)
 
     self.saturated = self._check_saturation(control, check_saturation, error)
 
     self.control = clip(control, self.neg_limit, self.pos_limit)
+
     return self.control

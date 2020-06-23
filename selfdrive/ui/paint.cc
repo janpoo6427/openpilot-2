@@ -1,5 +1,10 @@
 #include "ui.hpp"
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <string.h>
+#include <unistd.h>
 #include <map>
 #include "common/util.h"
 
@@ -621,6 +626,40 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
     snprintf(val_str, sizeof(val_str), "%d°C", (int)(scene->maxBatTemp/1000));
     snprintf(uom_str, sizeof(uom_str), "");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "BAT TEMP",
+        bb_rx, bb_ry, bb_uom_dx,
+        val_color, lab_color, uom_color,
+        value_fontSize, label_fontSize, uom_fontSize );
+    bb_ry = bb_y + bb_h;
+  }
+
+  //add battery level
+    if(true) {
+    char val_str[16];
+    char uom_str[6];
+    char bat_lvl[4] = "";
+    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
+    int fd;
+    fd = open("/sys/class/power_supply/battery/capacity", O_RDONLY);
+    if(fd == -1)
+    {
+    }
+    else
+    {
+      read(fd, &bat_lvl, 3);
+    }
+    for (int i=1; i<4; i++)
+    {
+      if(isdigit(bat_lvl[i]) == 0)
+          {
+            bat_lvl[i] = '\0';
+            break;
+          }
+    }
+    close(fd);
+
+    snprintf(val_str, sizeof(val_str), "%s%%", bat_lvl);
+    snprintf(uom_str, sizeof(uom_str), "");
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "BAT LVL",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );

@@ -179,18 +179,18 @@ class CarInterface(CarInterfaceBase):
       #ret.lateralTuning.pid.kf = 0.00005
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
-      ret.steerRatio = 13.75
+      ret.steerRatio = 13.5
       tire_stiffness_factor = 0.6
+      ret.minSteerSpeed = 0.
 
       ret.steerActuatorDelay = 0.1
 
-
       ret.lateralTuning.pid.kf = 0.00001
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = \
-        [0, 14], [0.2, 0.25]
+        [0], [0.25]
 
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = \
-        [0, 14], [0.02, 0.025]
+        [0], [0.01]
 
     ret.centerToFront = ret.wheelbase * 0.4
 

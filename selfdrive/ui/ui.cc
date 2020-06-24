@@ -389,7 +389,7 @@ void handle_message(UIState *s,  Message* msg) {
     }
     scene.v_cruise = data.getVCruise();
     scene.v_ego = data.getVEgo();
-    scene.curvature = data.getCurvature() * 180. / 3.1415926536;
+    scene.curvature = data.getCurvature();
     scene.engaged = data.getEnabled();
     scene.engageable = data.getEngageable();
     scene.gps_planner_active = data.getGpsPlannerActive();

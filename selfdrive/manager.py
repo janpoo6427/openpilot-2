@@ -172,7 +172,7 @@ managed_processes = {
   #"loggerd": ("selfdrive/loggerd", ["./loggerd"]),
   #"logmessaged": "selfdrive.logmessaged",
   "locationd": "selfdrive.locationd.locationd",
-  "tombstoned": "selfdrive.tombstoned",
+  #"tombstoned": "selfdrive.tombstoned",
   #"logcatd": ("selfdrive/logcatd", ["./logcatd"]),
   "proclogd": ("selfdrive/proclogd", ["./proclogd"]),
   "boardd": ("selfdrive/boardd", ["./boardd"]),   # not used directly

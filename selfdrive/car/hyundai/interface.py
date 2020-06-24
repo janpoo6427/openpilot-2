@@ -176,7 +176,7 @@ class CarInterface(CarInterfaceBase):
       ret.minSteerSpeed = 0.
 
     elif candidate == CAR.GRANDEUR:
-      ret.lateralTuning.pid.kf = 0.00005
+      #ret.lateralTuning.pid.kf = 0.00005
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
       ret.steerRatio = 13.75
@@ -184,15 +184,13 @@ class CarInterface(CarInterfaceBase):
 
       ret.steerActuatorDelay = 0.1
 
-      # pid
-      # ret.lateralTuning.init('pid')
 
       ret.lateralTuning.pid.kf = 0.00001
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = \
-        [0], [0.25]
+        [0, 14], [0.2, 0.25]
 
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = \
-        [0], [0.01]
+        [0, 14], [0.02, 0.025]
 
     ret.centerToFront = ret.wheelbase * 0.4
 
@@ -293,7 +291,7 @@ class CarInterface(CarInterfaceBase):
       events.append(create_event('wrongCarMode', [ET.NO_ENTRY, ET.USER_DISABLE]))
     if ret.gearShifter == GearShifter.reverse:
       events.append(create_event('reverseGear', [ET.NO_ENTRY, ET.USER_DISABLE]))
-    if ret.steerWarning or abs(ret.steeringAngle) > 90.:
+    if ret.steerWarning: # or abs(ret.steeringAngle) > 90.:
       events.append(create_event('steerTempUnavailable', [ET.NO_ENTRY, ET.WARNING]))
 
     if ret.cruiseState.enabled and not self.CS.out.cruiseState.enabled:

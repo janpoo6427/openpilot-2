@@ -88,7 +88,7 @@ class PIController():
 
     control = self.p + self.f + self.i
 
-    # neokii
+    # d gain
     current_time = time.time()
 
     if self.previous_time is not None and self.previous_error is not None:

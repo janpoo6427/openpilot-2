@@ -33,6 +33,8 @@ class CarInterface(CarInterfaceBase):
     ret.steerLimitTimer = 0.8
     tire_stiffness_factor = 1.
 
+    ret.lateralTuning.pid.kd = 0.
+
     if candidate in [CAR.SANTA_FE, CAR.SANTA_FE_1]:
       ret.lateralTuning.pid.kf = 0.00005
       ret.mass = 3982. * CV.LB_TO_KG + STD_CARGO_KG
@@ -181,12 +183,11 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
 
-      ret.minSteerSpeed = 0.
+      ret.steerRateCost = 0.4
 
-      ret.steerActuatorDelay = 0.1
-
-      ret.steerRatio = 13.5
+      ret.steerRatio = 13.0
       ret.lateralTuning.pid.kf = 0.00001
+      ret.lateralTuning.pid.kd = 0.003
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.25]
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.01]
 

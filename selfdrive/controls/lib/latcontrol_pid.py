@@ -8,7 +8,9 @@ class LatControlPID():
   def __init__(self, CP):
     self.pid = PIController((CP.lateralTuning.pid.kpBP, CP.lateralTuning.pid.kpV),
                             (CP.lateralTuning.pid.kiBP, CP.lateralTuning.pid.kiV),
-                            k_f=CP.lateralTuning.pid.kf, pos_limit=1.0, sat_limit=CP.steerLimitTimer)
+                            k_f=CP.lateralTuning.pid.kf,
+                            k_d=CP.lateralTuning.pid.kd,
+                            pos_limit=1.0, sat_limit=CP.steerLimitTimer)
     self.angle_steers_des = 0.
 
   def reset(self):

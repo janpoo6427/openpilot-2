@@ -529,6 +529,8 @@ struct ControlsState @0x97ff69c53601abf1 {
   decelForModel @54 :Bool;
   canErrorCounter @57 :UInt32;
 
+  pCurvature @58 :Float32;
+
   lateralControlState :union {
     indiState @52 :LateralINDIState;
     pidState @53 :LateralPIDState;
@@ -760,6 +762,8 @@ struct Plan {
   radarCanError @30 :Bool;
 
   processingDelay @29 :Float32;
+
+  pCurvature @32 :Float32;
 
 
   struct GpsTrajectory {

@@ -406,6 +406,7 @@ def data_send(sm, pm, CS, CI, CP, VM, state, events, actuators, v_cruise_kph, rk
     "mapValid": sm['plan'].mapValid,
     "forceDecel": bool(force_decel),
     "canErrorCounter": can_error_counter,
+    "pCurvature": sm['plan'].pCurvature,
   }
 
   if CP.lateralTuning.which() == 'pid':

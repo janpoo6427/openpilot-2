@@ -130,6 +130,8 @@ class Planner():
     enabled = (long_control_state == LongCtrlState.pid) or (long_control_state == LongCtrlState.stopping)
     following = lead_1.status and lead_1.dRel < 45.0 and lead_1.vLeadK > v_ego and lead_1.aLeadK > 0.0
 
+    curvature = 0.
+
     if len(sm['model'].path.poly):
       path = list(sm['model'].path.poly)
 
@@ -145,6 +147,8 @@ class Planner():
       v_curvature = np.sqrt(a_y_max / np.clip(np.abs(curv), 1e-4, None))
       model_speed = np.min(v_curvature)
       model_speed = max(20.0 * CV.MPH_TO_MS, model_speed) # Don't slow down below 20mph
+
+      curvature = curv
     else:
       model_speed = MAX_SPEED
 
@@ -240,6 +244,8 @@ class Planner():
 
     # Send out fcw
     plan_send.plan.fcw = fcw
+
+    plan_send.plan.pCurvature = curvature
 
     pm.send('plan', plan_send)
 

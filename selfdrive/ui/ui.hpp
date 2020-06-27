@@ -176,6 +176,8 @@ typedef struct UIScene {
   float pid_d;
   float pid_output;
 
+  float pCurvature;
+
 } UIScene;
 
 typedef struct {

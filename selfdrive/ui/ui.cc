@@ -450,6 +450,8 @@ void handle_message(UIState *s,  Message* msg) {
     scene.pid_d = l_pid.getD();
     scene.pid_output = l_pid.getOutput();
 
+    scene.pcurvature = data.getPCurvature();
+
   } else if (which == cereal::Event::RADAR_STATE) {
     auto data = event.getRadarState();
 

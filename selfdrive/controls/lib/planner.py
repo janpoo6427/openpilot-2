@@ -247,6 +247,7 @@ class Planner():
     plan_send.plan.fcw = fcw
 
     plan_send.plan.pCurvature = float(curvature)
+    plan_send.plan.curvMaxSpeed = float(model_speed)
 
     pm.send('plan', plan_send)
 

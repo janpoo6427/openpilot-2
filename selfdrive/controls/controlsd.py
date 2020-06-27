@@ -407,6 +407,7 @@ def data_send(sm, pm, CS, CI, CP, VM, state, events, actuators, v_cruise_kph, rk
     "forceDecel": bool(force_decel),
     "canErrorCounter": can_error_counter,
     "pCurvature": sm['plan'].pCurvature,
+    "curvMaxSpeed": sm['plan'].curvMaxSpeed,
   }
 
   if CP.lateralTuning.which() == 'pid':

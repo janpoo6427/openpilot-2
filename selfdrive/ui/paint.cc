@@ -712,6 +712,9 @@ static void bb_ui_draw_L_PID(UIState *s)
     y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+    y += height;
+    snprintf(str, sizeof(str), "CMAX: %.3f", scene->curvMaxSpeed);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
 
 static void bb_ui_draw_UI(UIState *s)

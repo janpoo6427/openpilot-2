@@ -177,6 +177,7 @@ typedef struct UIScene {
   float pid_output;
 
   float pCurvature;
+  float curvMaxSpeed;
 
 } UIScene;
 

@@ -519,7 +519,14 @@ void handle_message(UIState *s,  Message* msg) {
     scene.maxBatTemp = data.getBat();
 
     s->thermal_started = data.getStarted();
-  } else if (which == cereal::Event::UBLOX_GNSS) {
+  }
+  else if (which == cereal::Event::CAR_CONTROL){
+
+    auto data = event.getCarControl();
+    scene.actuators = data.getActuators();
+
+  }
+  else if (which == cereal::Event::UBLOX_GNSS) {
     auto data = event.getUbloxGnss();
     if (data.which() == cereal::UbloxGnss::MEASUREMENT_REPORT) {
       scene.satelliteCount = data.getMeasurementReport().getNumMeas();

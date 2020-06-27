@@ -675,7 +675,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   nvgStroke(s->vg);
 }
 
-static void bb_ui_draw_L_PID(UIState *s)
+static void bb_ui_draw_L_Extra(UIState *s)
 {
     const UIScene *scene = &s->scene;
 
@@ -712,10 +712,16 @@ static void bb_ui_draw_L_PID(UIState *s)
     y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
     y += height;
     snprintf(str, sizeof(str), "CMAX: %.3f", scene->curvMaxSpeed);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "ACC: %.3f", scene->actuators.getGas() - scene->actuators.getBrake());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
+
 
 static void bb_ui_draw_UI(UIState *s)
 {
@@ -730,7 +736,7 @@ static void bb_ui_draw_UI(UIState *s)
 
   bb_ui_draw_measures_left(s, bb_dml_x, bb_dml_y, bb_dml_w);
   bb_ui_draw_measures_right(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
-  bb_ui_draw_L_PID(s);
+  bb_ui_draw_L_Extra(s);
 }
 
 static void ui_draw_vision_maxspeed(UIState *s) {

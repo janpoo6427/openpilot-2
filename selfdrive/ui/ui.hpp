@@ -179,6 +179,8 @@ typedef struct UIScene {
   float pCurvature;
   float curvMaxSpeed;
 
+  cereal::CarControl::Actuators actuators;
+
 } UIScene;
 
 typedef struct {

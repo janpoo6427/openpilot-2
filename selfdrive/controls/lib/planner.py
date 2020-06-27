@@ -130,8 +130,6 @@ class Planner():
     enabled = (long_control_state == LongCtrlState.pid) or (long_control_state == LongCtrlState.stopping)
     following = lead_1.status and lead_1.dRel < 45.0 and lead_1.vLeadK > v_ego and lead_1.aLeadK > 0.0
 
-    curvature = 0.
-
     if len(sm['model'].path.poly):
       path = list(sm['model'].path.poly)
 
@@ -151,6 +149,7 @@ class Planner():
       curvature = curv
     else:
       model_speed = MAX_SPEED
+      curvature = 0.
 
     # Calculate speed for normal cruise control
     if enabled and not self.first_loop:
@@ -245,7 +244,7 @@ class Planner():
     # Send out fcw
     plan_send.plan.fcw = fcw
 
-    plan_send.plan.pCurvature = curvature
+    plan_send.plan.pCurvature = float(curvature)
 
     pm.send('plan', plan_send)
 

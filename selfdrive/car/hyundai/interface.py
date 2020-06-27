@@ -184,9 +184,9 @@ class CarInterface(CarInterfaceBase):
 
       ret.steerRatio = 13.0
       ret.lateralTuning.pid.kf = 0.00001
-      ret.lateralTuning.pid.kd = 0.003
-      ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.25]
-      ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.01]
+      ret.lateralTuning.pid.kd = 0.005
+      ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.35]
+      ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.00375]
 
 
     ret.centerToFront = ret.wheelbase * 0.4

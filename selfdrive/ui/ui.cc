@@ -227,7 +227,7 @@ static void ui_init(UIState *s) {
   s->driverstate_sock = SubSocket::create(s->ctx, "driverState");
   s->dmonitoring_sock = SubSocket::create(s->ctx, "dMonitoringState");
   s->offroad_sock = PubSocket::create(s->ctx, "offroadLayout");
-  s->carcontrol_sock = PubSocket::create(s->ctx, "carControl");
+  s->carcontrol_sock = SubSocket::create(s->ctx, "carControl");
 
   assert(s->model_sock != NULL);
   assert(s->controlsstate_sock != NULL);

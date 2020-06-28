@@ -462,7 +462,7 @@ void handle_message(UIState *s,  Message* msg) {
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
 
     auto data = event.getGpsLocationExternal();
-    scene.gpsAccuracy = data.getAccuracy()
+    scene.gpsAccuracy = data.getAccuracy();
 
     if (scene.gpsAccuracy > 100)
     {

@@ -227,6 +227,7 @@ static void ui_init(UIState *s) {
   s->driverstate_sock = SubSocket::create(s->ctx, "driverState");
   s->dmonitoring_sock = SubSocket::create(s->ctx, "dMonitoringState");
   s->offroad_sock = PubSocket::create(s->ctx, "offroadLayout");
+  s->carcontrol_sock = PubSocket::create(s->ctx, "carControl");
 
   assert(s->model_sock != NULL);
   assert(s->controlsstate_sock != NULL);
@@ -239,6 +240,7 @@ static void ui_init(UIState *s) {
   assert(s->driverstate_sock != NULL);
   assert(s->dmonitoring_sock != NULL);
   assert(s->offroad_sock != NULL);
+  assert(s->carcontrol_sock != NULL);
 
   s->poller = Poller::create({
                               s->model_sock,
@@ -250,7 +252,8 @@ static void ui_init(UIState *s) {
                               s->health_sock,
                               s->ubloxgnss_sock,
                               s->driverstate_sock,
-                              s->dmonitoring_sock
+                              s->dmonitoring_sock,
+                              s->carcontrol_sock
                              });
 
 #ifdef SHOW_SPEEDLIMIT

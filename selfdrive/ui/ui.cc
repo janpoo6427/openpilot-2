@@ -228,6 +228,7 @@ static void ui_init(UIState *s) {
   s->dmonitoring_sock = SubSocket::create(s->ctx, "dMonitoringState");
   s->offroad_sock = PubSocket::create(s->ctx, "offroadLayout");
   s->carcontrol_sock = SubSocket::create(s->ctx, "carControl");
+  s->gpsLocationExternal_sock = SubSocket::create(s->ctx, "gpsLocationExternal");
 
   assert(s->model_sock != NULL);
   assert(s->controlsstate_sock != NULL);
@@ -241,6 +242,7 @@ static void ui_init(UIState *s) {
   assert(s->dmonitoring_sock != NULL);
   assert(s->offroad_sock != NULL);
   assert(s->carcontrol_sock != NULL);
+  assert(s->gpsLocationExternal_sock != NULL);
 
   s->poller = Poller::create({
                               s->model_sock,
@@ -253,7 +255,8 @@ static void ui_init(UIState *s) {
                               s->ubloxgnss_sock,
                               s->driverstate_sock,
                               s->dmonitoring_sock,
-                              s->carcontrol_sock
+                              s->carcontrol_sock,
+                              s->gpsLocationExternal_sock
                              });
 
 #ifdef SHOW_SPEEDLIMIT
@@ -455,6 +458,20 @@ void handle_message(UIState *s,  Message* msg) {
 
     scene.pCurvature = data.getPCurvature();
     scene.curvMaxSpeed = data.getCurvMaxSpeed();
+
+  } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
+
+    auto data = event.getGpsLocationExternal();
+    scene.gpsAccuracy = data.getAccuracy()
+
+    if (scene.gpsAccuracy > 100)
+    {
+      scene.gpsAccuracy = 99.99;
+    }
+    else if (scene.gpsAccuracy == 0)
+    {
+      scene.gpsAccuracy = 99.8;
+    }
 
   } else if (which == cereal::Event::RADAR_STATE) {
     auto data = event.getRadarState();

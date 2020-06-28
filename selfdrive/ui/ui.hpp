@@ -181,6 +181,8 @@ typedef struct UIScene {
 
   cereal::CarControl::Actuators::Reader actuators;
 
+  float gpsAccuracy;
+
 } UIScene;
 
 typedef struct {
@@ -238,6 +240,7 @@ typedef struct UIState {
   SubSocket *dmonitoring_sock;
   PubSocket *offroad_sock;
   SubSocket *carcontrol_sock;
+  SubSocket *gpsLocationExternal_sock;
   Poller * poller;
   Poller * ublox_poller;
 

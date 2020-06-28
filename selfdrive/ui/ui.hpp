@@ -182,6 +182,7 @@ typedef struct UIScene {
   cereal::CarControl::Actuators::Reader actuators;
 
   float gpsAccuracy;
+  bool recording;
 
 } UIScene;
 

@@ -146,7 +146,7 @@ class Planner():
       model_speed = np.min(v_curvature)
       model_speed = max(20.0 * CV.MPH_TO_MS, model_speed) # Don't slow down below 20mph
 
-      curvature = np.mean(curv[1:4]) * 100.
+      curvature = np.mean(curv[1:4])
     else:
       model_speed = MAX_SPEED
       curvature = 0.

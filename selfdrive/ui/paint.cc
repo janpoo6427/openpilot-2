@@ -727,17 +727,17 @@ static void bb_ui_draw_L_Extra(UIState *s)
     snprintf(str, sizeof(str), "D: %.5f", scene->pid_d);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
-    y += height;
+    /*y += height;
     snprintf(str, sizeof(str), "O: %.5f", scene->pid_output);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature * 1000.);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
-    y += height;
+    /*y += height;
     snprintf(str, sizeof(str), "CMAX: %.3f", scene->curvMaxSpeed);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
     snprintf(str, sizeof(str), "ACC: %.3f", scene->actuators.getGas() - scene->actuators.getBrake());

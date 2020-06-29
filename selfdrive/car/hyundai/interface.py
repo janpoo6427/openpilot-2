@@ -269,11 +269,7 @@ class CarInterface(CarInterfaceBase):
     if ret.vEgo > (self.CP.minSteerSpeed + 0.7):
       self.low_speed_alert = False
 
-    # TODO: button presses
     ret.buttonEvents = []
-
-    #events = self.create_common_events(ret)
-    #TODO: addd abs(self.CS.angle_steers) > 90 to 'steerTempUnavailable' event
 
     events = []
     if not ret.gearShifter == GearShifter.drive:

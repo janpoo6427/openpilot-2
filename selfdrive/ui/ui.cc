@@ -406,6 +406,7 @@ void handle_message(UIState *s,  Message* msg) {
     scene.gps_planner_active = data.getGpsPlannerActive();
     scene.monitoring_active = data.getDriverMonitoringOn();
 
+
     scene.decel_for_model = data.getDecelForModel();
     auto alert_sound = data.getAlertSound();
     const auto sound_none = cereal::CarControl::HUDControl::AudibleAlert::NONE;
@@ -460,6 +461,9 @@ void handle_message(UIState *s,  Message* msg) {
     scene.pid_f = l_pid.getF();
     scene.pid_d = l_pid.getD();
     scene.pid_output = l_pid.getOutput();
+
+    scene.steerOverride = data.getSteerOverride();
+    scene.output_scale = l_pid.getOutput();
 
     scene.pCurvature = data.getPCurvature();
     scene.curvMaxSpeed = data.getCurvMaxSpeed();

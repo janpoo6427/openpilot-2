@@ -163,6 +163,10 @@ typedef struct UIScene {
   int satelliteCount;
   uint8_t athenaStatus;
 
+  // pathcoloring
+  float output_scale;
+  bool steerOverride;
+
   // dev ui
   uint16_t maxCpuTemp;
   uint32_t maxBatTemp;

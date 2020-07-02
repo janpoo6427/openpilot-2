@@ -64,39 +64,53 @@ static void ui_draw_text(NVGcontext *vg, float x, float y, const char* string, f
 
 static void draw_chevron(UIState *s, float x_in, float y_in, float sz,
                           NVGcolor fillColor, NVGcolor glowColor) {
+  const UIScene *scene = &s->scene;
+
+  nvgSave(s->vg);
+
+  nvgTranslate(s->vg, 240.0f, 0.0);
+  nvgTranslate(s->vg, -1440.0f / 2, -1080.0f / 2);
+  nvgScale(s->vg, 2.0, 2.0);
+  nvgScale(s->vg, 1440.0f / s->rgb_width, 1080.0f / s->rgb_height);
+
   const vec4 p_car_space = (vec4){{x_in, y_in, 0., 1.}};
   const vec3 p_full_frame = car_space_to_full_frame(s, p_car_space);
-
-  float x = p_full_frame.v[0];
-  float y = p_full_frame.v[1];
-  if (x < 0 || y < 0.){
-    return;
-  }
 
   sz *= 30;
   sz /= (x_in / 3 + 30);
   if (sz > 30) sz = 30;
   if (sz < 15) sz = 15;
-  
+
+  float x = p_full_frame.v[0];
+  float y = p_full_frame.v[1];
+
   // glow
+  nvgBeginPath(s->vg);
   float g_xo = sz/5;
   float g_yo = sz/10;
-  nvgBeginPath(s->vg);
-  nvgMoveTo(s->vg, x+(sz*1.35)+g_xo, y+sz+g_yo);
-  nvgLineTo(s->vg, x, y-g_xo);
-  nvgLineTo(s->vg, x-(sz*1.35)-g_xo, y+sz+g_yo);
-  nvgClosePath(s->vg);
+  if (x >= 0 && y >= 0.) {
+    nvgMoveTo(s->vg, x+(sz*1.35)+g_xo, y+sz+g_yo);
+    nvgLineTo(s->vg, x, y-g_xo);
+    nvgLineTo(s->vg, x-(sz*1.35)-g_xo, y+sz+g_yo);
+    nvgLineTo(s->vg, x+(sz*1.35)+g_xo, y+sz+g_yo);
+    nvgClosePath(s->vg);
+  }
   nvgFillColor(s->vg, glowColor);
   nvgFill(s->vg);
 
   // chevron
   nvgBeginPath(s->vg);
-  nvgMoveTo(s->vg, x+(sz*1.25), y+sz);
-  nvgLineTo(s->vg, x, y);
-  nvgLineTo(s->vg, x-(sz*1.25), y+sz);
-  nvgClosePath(s->vg);
+  if (x >= 0 && y >= 0.) {
+    nvgMoveTo(s->vg, x+(sz*1.25), y+sz);
+    nvgLineTo(s->vg, x, y);
+    nvgLineTo(s->vg, x-(sz*1.25), y+sz);
+    nvgLineTo(s->vg, x+(sz*1.25), y+sz);
+    nvgClosePath(s->vg);
+  }
   nvgFillColor(s->vg, fillColor);
   nvgFill(s->vg);
+
+  nvgRestore(s->vg);
 }
 
 static void ui_draw_circle_image(NVGcontext *vg, float x, float y, int size, int image, NVGcolor color, float img_alpha, int img_y = 0) {
@@ -217,36 +231,62 @@ static void update_all_track_data(UIState *s) {
 
 
 static void ui_draw_track(UIState *s, bool is_mpc, track_vertices_data *pvd) {
+const UIScene *scene = &s->scene;
+  const PathData path = scene->model.path;
+  const float *mpc_x_coords = &scene->mpc_x[0];
+  const float *mpc_y_coords = &scene->mpc_y[0];
+
+  nvgSave(s->vg);
+  nvgTranslate(s->vg, 240.0f, 0.0); // rgb-box space
+  nvgTranslate(s->vg, -1440.0f / 2, -1080.0f / 2); // zoom 2x
+  nvgScale(s->vg, 2.0, 2.0);
+  nvgScale(s->vg, 1440.0f / s->rgb_width, 1080.0f / s->rgb_height);
   nvgBeginPath(s->vg);
+
   bool started = false;
+  float off = is_mpc?0.3:0.5;
+  float lead_d = scene->lead_d_rel*2.;
+  float path_height = is_mpc?(lead_d>5.)?fmin(lead_d, 25.)-fmin(lead_d*0.35, 10.):20.
+                            :(lead_d>0.)?fmin(lead_d, 50.)-fmin(lead_d*0.35, 10.):49.;
+  int vi = 0;
   for(int i = 0;i < pvd->cnt;i++) {
-    float x = pvd->v[i].x;
-    float y = pvd->v[i].y;
-    if (x < 0 || y < 0) {
+    if (pvd->v[i].x < 0 || pvd->v[i].y < 0) {
       continue;
     }
+
     if (!started) {
-      nvgMoveTo(s->vg, x, y);
+      nvgMoveTo(s->vg, pvd->v[i].x, pvd->v[i].y);
       started = true;
     } else {
-      nvgLineTo(s->vg, x, y);
+      nvgLineTo(s->vg, pvd->v[i].x, pvd->v[i].y);
     }
   }
+
   nvgClosePath(s->vg);
 
   NVGpaint track_bg;
   if (is_mpc) {
     // Draw colored MPC track
-    const uint8_t *clr = bg_colors[s->status];
-    track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
-      nvgRGBA(clr[0], clr[1], clr[2], 255), nvgRGBA(clr[0], clr[1], clr[2], 255/2));
+    if (scene->steerOverride) {
+      track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
+        nvgRGBA(0, 191, 255, 255), nvgRGBA(0, 95, 128, 50));
+    } else {
+      int torque_scale = (int)fabs(510*(float)s->scene.output_scale);
+      int red_lvl = fmin(255, torque_scale);
+      int green_lvl = fmin(255, 510-torque_scale);
+      track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
+        nvgRGBA(          red_lvl,            green_lvl,  0, 255),
+        nvgRGBA((int)(0.5*red_lvl), (int)(0.5*green_lvl), 0, 50));
+    }
   } else {
     // Draw white vision track
     track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
-      COLOR_WHITE, COLOR_WHITE_ALPHA(0));
+      nvgRGBA(255, 255, 255, 200), nvgRGBA(255, 255, 255, 50));
   }
+
   nvgFillPaint(s->vg, track_bg);
   nvgFill(s->vg);
+  nvgRestore(s->vg);
 }
 
 static void draw_steering(UIState *s, float curvature) {

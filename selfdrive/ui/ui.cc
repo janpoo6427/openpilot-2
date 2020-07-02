@@ -546,7 +546,8 @@ void handle_message(UIState *s,  Message* msg) {
     auto data = event.getCarControl();
     scene.actuators = data.getActuators();
   }
-  else if (which == cereal::Event::CAR_STATE){
+  else if (which == cereal::Event::CAR_STATE)
+  {
     auto data = event.getCarState();
     scene.brakeLights = data.getBrakeLights();
   }

@@ -300,7 +300,7 @@ static inline bool valid_frame_pt(UIState *s, float x, float y) {
   return x >= 0 && x <= s->rgb_width && y >= 0 && y <= s->rgb_height;
 
 }
-static void update_lane_line_data(UIState *s, const float *points, float off, model_path_vertices_data *pvd) {
+static void update_lane_line_data(UIState *s, const float *points, float off, bool is_ghost, model_path_vertices_data *pvd) {
   pvd->cnt = 0;
   for (int i = 0; i < MODEL_PATH_MAX_VERTICES_CNT / 2; i++) {
     float px = (float)i;
@@ -315,7 +315,7 @@ static void update_lane_line_data(UIState *s, const float *points, float off, mo
   }
   for (int i = MODEL_PATH_MAX_VERTICES_CNT / 2; i > 0; i--) {
     float px = (float)i;
-    float py = points[i] + off;
+    float py = is_ghost?(points[i]-off):(points[i]+off);
     const vec4 p_car_space = (vec4){{px, py, 0., 1.}};
     const vec3 p_full_frame = car_space_to_full_frame(s, p_car_space);
     if(!valid_frame_pt(s, p_full_frame.v[0], p_full_frame.v[1]))
@@ -327,16 +327,16 @@ static void update_lane_line_data(UIState *s, const float *points, float off, mo
 }
 
 static void update_all_lane_lines_data(UIState *s, const PathData path, model_path_vertices_data *pstart) {
-  update_lane_line_data(s, path.points, 0.025*path.prob, pstart);
+  update_lane_line_data(s, path.points, 0.025*path.prob, false, pstart);
   float var = fmin(path.std, 0.7);
-  update_lane_line_data(s, path.points, -var, pstart + 1);
-  update_lane_line_data(s, path.points, var, pstart + 2);
+  update_lane_line_data(s, path.points, -var, true, pstart + 1);
+  update_lane_line_data(s, path.points, var, true, pstart + 2);
 }
 
 static void ui_draw_lane(UIState *s, const PathData *path, model_path_vertices_data *pstart, NVGcolor color) {
   ui_draw_lane_line(s, pstart, color);
   float var = fmin(path->std, 0.7);
-  color.a /= 25;
+  color.a /= 4;
   ui_draw_lane_line(s, pstart + 1, color);
   ui_draw_lane_line(s, pstart + 2, color);
 }
@@ -1249,14 +1249,7 @@ static const mat4 full_to_wide_frame_transform = {{
 
 void ui_nvg_init(UIState *s) {
   // init drawing
-
-#ifdef QCOM
-  // on QCOM, we enable MSAA
-  s->vg = nvgCreate(0);
-#else
-  s->vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);	  s->vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
-#endif
-
+  s->vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
   assert(s->vg);
 
   s->font_courbd = nvgCreateFont(s->vg, "courbd", "../assets/fonts/courbd.ttf");

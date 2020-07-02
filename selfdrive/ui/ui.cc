@@ -543,10 +543,12 @@ void handle_message(UIState *s,  Message* msg) {
     s->thermal_started = data.getStarted();
   }
   else if (which == cereal::Event::CAR_CONTROL){
-
     auto data = event.getCarControl();
     scene.actuators = data.getActuators();
-
+  }
+  else if (which == cereal::Event::CAR_STATE){
+    auto data = event.getCarState();
+    scene.brakeLights = data.getBrakeLights();
   }
   else if (which == cereal::Event::UBLOX_GNSS) {
     auto data = event.getUbloxGnss();

@@ -114,6 +114,7 @@ typedef struct UIScene {
   float speedlimit;
   bool speedlimit_valid;
   bool map_valid;
+  bool brakeLights;
 
   float curvature;
   int engaged;
@@ -220,6 +221,7 @@ typedef struct UIState {
   int img_turn;
   int img_face;
   int img_map;
+  int img_brake;
   int img_button_settings;
   int img_button_home;
   int img_battery;

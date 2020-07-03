@@ -193,7 +193,7 @@ typedef struct UIScene {
 
   float lp_steerRatio;
   float lp_stiffnessFactor;
-  float lp_angleOffsetAverage;
+  float lp_angleOffset;
 
 } UIScene;
 

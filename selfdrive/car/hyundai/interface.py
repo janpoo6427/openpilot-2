@@ -182,11 +182,11 @@ class CarInterface(CarInterfaceBase):
 
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.2
-      ret.steerRatio = 13.5
+      ret.steerRatio = 13.25
 
       ret.lateralTuning.pid.kf = 0.0001
       ret.lateralTuning.pid.kd = 0.004
-      ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.35]
+      ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.325]
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.01]
 
 

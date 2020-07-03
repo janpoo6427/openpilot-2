@@ -740,7 +740,15 @@ static void bb_ui_draw_L_Extra(UIState *s)
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
-    snprintf(str, sizeof(str), "ACC: %.3f", scene->actuators.getGas() - scene->actuators.getBrake());
+    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_steerRatio);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_stiffnessFactor);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_angleOffsetAverage);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
 

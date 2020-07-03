@@ -189,6 +189,12 @@ typedef struct UIScene {
   float gpsAccuracy;
   bool recording;
 
+  /////
+
+  float lp_steerRatio;
+  float lp_stiffnessFactor;
+  float lp_angleOffsetAverage;
+
 } UIScene;
 
 typedef struct {
@@ -249,6 +255,8 @@ typedef struct UIState {
   SubSocket *carcontrol_sock;
   SubSocket *gpsLocationExternal_sock;
   SubSocket *carstate_sock;
+  SubSocket *liveParameters_sock;
+
   Poller * poller;
   Poller * ublox_poller;
 

@@ -231,6 +231,9 @@ static void ui_init(UIState *s) {
   s->carcontrol_sock = SubSocket::create(s->ctx, "carControl");
   s->gpsLocationExternal_sock = SubSocket::create(s->ctx, "gpsLocationExternal");
   s->carstate_sock = SubSocket::create(s->ctx, "carState");
+  s->liveParameters_sock = SubSocket::create(s->ctx, "liveParameters");
+
+
 
   assert(s->model_sock != NULL);
   assert(s->controlsstate_sock != NULL);
@@ -246,6 +249,7 @@ static void ui_init(UIState *s) {
   assert(s->carcontrol_sock != NULL);
   assert(s->gpsLocationExternal_sock != NULL);
   assert(s->carstate_sock != NULL);
+  assert(s->liveParameters_sock != NULL);
 
   s->poller = Poller::create({
                               s->model_sock,
@@ -260,7 +264,8 @@ static void ui_init(UIState *s) {
                               s->dmonitoring_sock,
                               s->carcontrol_sock,
                               s->gpsLocationExternal_sock,
-                              s->carstate_sock
+                              s->carstate_sock,
+                              s->liveParameters_sock
                              });
 
 #ifdef SHOW_SPEEDLIMIT
@@ -548,6 +553,12 @@ void handle_message(UIState *s,  Message* msg) {
     scene.maxBatTemp = data.getBat();
 
     s->thermal_started = data.getStarted();
+  }
+  else if (which == cereal::Event::LIVE_PARAMETERS){
+    auto data = event.getLiveParameters();
+    scene.lp_steerRatio = data.getSteerRatio();
+    scene.lp_angleOffset = data.getAngleOffset();
+    scene.lp_stiffnessFactor = data.getStiffnessFactor();
   }
   else if (which == cereal::Event::CAR_CONTROL){
     auto data = event.getCarControl();

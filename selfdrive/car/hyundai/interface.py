@@ -180,7 +180,7 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
 
-      ret.steerRateCost = 0.5
+      ret.steerRateCost = 0.3
       ret.steerActuatorDelay = 0.2
       ret.steerRatio = 13.25
 

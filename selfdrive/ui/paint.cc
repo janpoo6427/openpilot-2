@@ -740,15 +740,15 @@ static void bb_ui_draw_L_Extra(UIState *s)
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
-    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_steerRatio);
+    snprintf(str, sizeof(str), "steerRatio: %.3f", scene->lp_steerRatio);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
-    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_stiffnessFactor);
+    snprintf(str, sizeof(str), "stiffness: %.3f", scene->lp_stiffnessFactor);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
-    snprintf(str, sizeof(str), "SR: %.3f", scene->lp_angleOffset);
+    snprintf(str, sizeof(str), "angleOffset: %.3f", scene->lp_angleOffset);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
 

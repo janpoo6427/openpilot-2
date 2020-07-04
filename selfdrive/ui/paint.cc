@@ -727,9 +727,9 @@ static void bb_ui_draw_L_Extra(UIState *s)
     snprintf(str, sizeof(str), "D: %.5f", scene->pid_d);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
-    /*y += height;
+    y += height;
     snprintf(str, sizeof(str), "O: %.5f", scene->pid_output);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature * 1000.);
@@ -740,15 +740,7 @@ static void bb_ui_draw_L_Extra(UIState *s)
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
-    snprintf(str, sizeof(str), "steerRatio: %.3f", scene->lp_steerRatio);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "stiffness: %.3f", scene->lp_stiffnessFactor);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "angleOffset: %.3f", scene->lp_angleOffset);
+    snprintf(str, sizeof(str), "sR: %.3f", scene->lp_steerRatio);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
 

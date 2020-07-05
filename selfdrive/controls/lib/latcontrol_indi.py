@@ -63,6 +63,13 @@ class LatControlINDI():
     return self.sat_count > self.sat_limit
 
   def update(self, active, v_ego, angle_steers, angle_steers_rate, eps_torque, steer_override, rate_limited, CP, path_plan):
+
+    self.RC = CP.lateralTuning.indi.timeConstant
+    self.G = CP.lateralTuning.indi.actuatorEffectiveness
+    self.outer_loop_gain = CP.lateralTuning.indi.outerLoopGain
+    self.inner_loop_gain = CP.lateralTuning.indi.innerLoopGain
+    self.alpha = 1. - DT_CTRL / (self.RC + DT_CTRL)
+
     # Update Kalman filter
     y = np.matrix([[math.radians(angle_steers)], [math.radians(angle_steers_rate)]])
     self.x = np.dot(self.A_K, self.x) + np.dot(self.K, y)

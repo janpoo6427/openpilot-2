@@ -712,10 +712,11 @@ static void bb_ui_draw_L_Extra(UIState *s)
 
     char str[256];
 
-    /*
+
     snprintf(str, sizeof(str), "P: %.5f", scene->pid_p);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
+    /*
     y += height;
     snprintf(str, sizeof(str), "I: %.5f", scene->pid_i);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);

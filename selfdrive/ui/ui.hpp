@@ -195,6 +195,8 @@ typedef struct UIScene {
   float lp_stiffnessFactor;
   float lp_angleOffset;
 
+  cereal::ControlsState::LateralINDIState::Reader indi;
+
 } UIScene;
 
 typedef struct {

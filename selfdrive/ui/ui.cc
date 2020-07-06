@@ -473,6 +473,8 @@ void handle_message(UIState *s,  Message* msg) {
     scene.pCurvature = data.getPCurvature();
     scene.curvMaxSpeed = data.getCurvMaxSpeed();
 
+    scene.indi = data.getLateralControlState().getIndiState();
+
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
 
     auto data = event.getGpsLocationExternal();

@@ -712,6 +712,7 @@ static void bb_ui_draw_L_Extra(UIState *s)
 
     char str[256];
 
+    /*
     snprintf(str, sizeof(str), "P: %.5f", scene->pid_p);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
@@ -729,15 +730,36 @@ static void bb_ui_draw_L_Extra(UIState *s)
 
     y += height;
     snprintf(str, sizeof(str), "O: %.5f", scene->pid_output);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
+
+    snprintf(str, sizeof(str), "RS: %.5f", scene->indi.getRateSetPoint());
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "AS: %.5f", scene->indi.getAccelSetPoint());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "AE: %.5f", scene->indi.getAccelError());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "DO: %.5f", scene->indi.getDelayedOutput());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "D: %.5f", scene->indi.getDelta());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "O: %.5f", scene->indi.getOutput());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    ///////////
 
     y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature * 1000.);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    /*y += height;
-    snprintf(str, sizeof(str), "CMAX: %.3f", scene->curvMaxSpeed);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     y += height;
     snprintf(str, sizeof(str), "sR: %.3f", scene->lp_steerRatio);

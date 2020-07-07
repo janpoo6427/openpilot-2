@@ -180,12 +180,10 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
 
-      '''
-      ret.lateralTuning.pid.kf = 0.00005
-      ret.lateralTuning.pid.kd = 0.002
+      ret.lateralTuning.pid.kf = 0.00001
+      ret.lateralTuning.pid.kd = 0.003
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.30]
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.02]
-      '''
 
       # -----------------------------------------------------------------------------
       # INDI
@@ -194,12 +192,13 @@ class CarInterface(CarInterfaceBase):
       # timeconstant is smoothing. Higher values == more smoothing
       # actuatoreffectiveness is how much it steers. Lower values == more steering
 
+      '''
       ret.lateralTuning.init('indi')
       ret.lateralTuning.indi.innerLoopGain = 3.25
       ret.lateralTuning.indi.outerLoopGain = 2.75
       ret.lateralTuning.indi.timeConstant = 2.0
       ret.lateralTuning.indi.actuatorEffectiveness = 1.7
-
+      '''
       ret.steerRatio = 12.0
       ret.steerActuatorDelay = 0.25
       ret.steerRateCost = 0.5

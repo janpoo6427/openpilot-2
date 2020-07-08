@@ -198,7 +198,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstant = 2.0
       ret.lateralTuning.indi.actuatorEffectiveness = 1.7
 
-      ret.steerRatio = 12.0
+      ret.steerRatio = 13.25
       ret.steerActuatorDelay = 0.25
       ret.steerRateCost = 0.5
       ret.steerLimitTimer = 1.0 #0.8

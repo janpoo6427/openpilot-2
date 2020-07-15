@@ -180,6 +180,11 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845
 
+      #ret.lateralTuning.pid.kf = 0.00001
+      #ret.lateralTuning.pid.kd = 0.003
+      #ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.30]
+      #ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.02]
+
       # -----------------------------------------------------------------------------
       # INDI
       # -----------------------------------------------------------------------------
@@ -198,10 +203,11 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kpV = [0], [0.30]
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kiV = [0], [0.02]
 
-      ret.steerRatio = 12.25
+
+      ret.steerRatio = 13.25
       ret.steerActuatorDelay = 0.3
       ret.steerRateCost = 0.5
-      ret.steerLimitTimer = 0.8
+      ret.steerLimitTimer = 1.0 #0.8
 
 
     ret.centerToFront = ret.wheelbase * 0.4
@@ -230,7 +236,7 @@ class CarInterface(CarInterfaceBase):
 
     # steer, gas, brake limitations VS speed
     ret.steerMaxBP = [0.]
-    ret.steerMaxV = [1.5]
+    ret.steerMaxV = [1.3]
     ret.gasMaxBP = [0.]
     ret.gasMaxV = [0.5]
     ret.brakeMaxBP = [0., 20.]

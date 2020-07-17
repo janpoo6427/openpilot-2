@@ -197,6 +197,7 @@ typedef struct UIScene {
   float lp_angleOffset;
 
   cereal::ControlsState::LateralINDIState::Reader indi;
+  cereal::ControlsState::LateralLQRState::Reader lqr;
 
 } UIScene;
 

@@ -759,27 +759,15 @@ static void bb_ui_draw_L_Extra(UIState *s)
     ///////////
     // LQR
 
-    snprintf(str, sizeof(str), "RateSP: %.3f", scene->lqr.getRateSetPoint());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "AccSP: %.3f", scene->lqr.getAccelSetPoint());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "AccERR: %.3f", scene->lqr.getAccelError());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "D_OUT: %.3f", scene->lqr.getDelayedOutput());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "Delta: %.3f", scene->lqr.getDelta());
+    snprintf(str, sizeof(str), "I: %.3f", scene->lqr.getI());
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
     snprintf(str, sizeof(str), "Output: %.3f", scene->lqr.getOutput());
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "LQR-O: %.3f", scene->lqr.getLqrOutput());
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;

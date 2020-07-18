@@ -90,6 +90,7 @@ class CarController():
     # disable if steer angle reach 90 deg, otherwise mdps fault in some models
     # temporarily disable steering when LKAS button off 
     # lkas_active = enabled and abs(CS.out.steeringAngle) < 90. and self.lkas_button_on
+    lkas_active = enabled and self.lkas_button_on
 
     # fix for Genesis hard fault at low speed
     if CS.out.vEgo < 60 * CV.KPH_TO_MS and self.car_fingerprint == CAR.HYUNDAI_GENESIS and not CS.mdps_bus:

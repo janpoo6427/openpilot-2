@@ -6,7 +6,7 @@ import datetime
 import psutil
 from smbus2 import SMBus
 from cereal import log
-from common.android import ANDROID, get_network_type, get_network_strength
+from common.android import ANDROID, get_network_type, get_network_strength, get_ip_address
 from common.basedir import BASEDIR
 from common.params import Params, put_nonblocking
 from common.realtime import sec_since_boot, DT_TRML
@@ -173,6 +173,7 @@ def thermald_thread():
 
   network_type = NetworkType.none
   network_strength = NetworkStrength.unknown
+  wifiIpAddress = '--'
 
   current_filter = FirstOrderFilter(0., CURRENT_TAU, DT_TRML)
   cpu_temp_filter = FirstOrderFilter(0., CPU_TEMP_TAU, DT_TRML)
@@ -232,6 +233,7 @@ def thermald_thread():
       try:
         network_type = get_network_type()
         network_strength = get_network_strength(network_type)
+        wifiIpAddress = get_ip_address()
       except Exception:
         cloudlog.exception("Error getting network status")
 
@@ -240,6 +242,7 @@ def thermald_thread():
     msg.thermal.cpuPerc = int(round(psutil.cpu_percent()))
     msg.thermal.networkType = network_type
     msg.thermal.networkStrength = network_strength
+    msg.thermal.wifiIpAddress = wifiIpAddress
     msg.thermal.batteryPercent = get_battery_capacity()
     msg.thermal.batteryStatus = get_battery_status()
     msg.thermal.batteryCurrent = get_battery_current()

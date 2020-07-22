@@ -539,7 +539,7 @@ void handle_message(UIState *s,  Message* msg) {
 
     scene.networkType = data.getNetworkType();
     scene.networkStrength = data.getNetworkStrength();
-    scene.networkType = data.getWifiIpAddress();
+    scene.wifiIpAddress = data.getWifiIpAddress();
     scene.batteryPercent = data.getBatteryPercent();
     scene.batteryCharging = data.getBatteryStatus() == "Charging";
     scene.freeSpace = data.getFreeSpace();

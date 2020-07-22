@@ -71,6 +71,7 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
 
+  nvgFontSize(s->vg, 40);
   nvgTextBox(s->vg, network_x-20, network_y + 55, 250, s->scene.wifiIpAddress.c_str(), NULL);
 }
 

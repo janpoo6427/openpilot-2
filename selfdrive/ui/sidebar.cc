@@ -71,7 +71,7 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
 
-  nvgTextBox(s->vg, network_x, network_y + 50, network_w, network_type ? network_type : "--", NULL);
+  nvgTextBox(s->vg, network_x, network_y + 50, network_w, s->scene.wifiIpAddress.c_str(), NULL);
 }
 
 static void ui_draw_sidebar_metric(UIState *s, const char* label_str, const char* value_str, const int severity, const int y_offset, const char* message_str) {

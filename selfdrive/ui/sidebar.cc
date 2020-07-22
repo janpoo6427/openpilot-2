@@ -129,10 +129,11 @@ static void ui_draw_sidebar_temp_metric(UIState *s) {
   const int temp_y_offset = 0;
   snprintf(temp_value_str, sizeof(temp_value_str), "%d", s->scene.paTemp);
   snprintf(temp_value_unit, sizeof(temp_value_unit), "%s", "°C");
-  snprintf(temp_label_str, sizeof(temp_label_str), "%s", "TEMP");
+  //snprintf(temp_label_str, sizeof(temp_label_str), "%s", "TEMP");
+  temp_label_str[0] = 0;
   strcat(temp_value_str, temp_value_unit);
 
-  ui_draw_sidebar_metric(s, temp_label_str, temp_value_str, temp_severity_map[s->scene.thermalStatus], temp_y_offset, NULL);
+  ui_draw_sidebar_metric(s, NULL, temp_value_str, temp_severity_map[s->scene.thermalStatus], temp_y_offset, NULL);
 }
 
 static void ui_draw_sidebar_panda_metric(UIState *s) {

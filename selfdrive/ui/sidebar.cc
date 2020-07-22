@@ -71,6 +71,7 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
 
+  network_y += 50;
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
 }
 

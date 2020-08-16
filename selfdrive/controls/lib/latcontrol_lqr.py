@@ -27,7 +27,7 @@ class LatControlLQR():
 
         self.reset()
 
-        self.tune = nTune(CP, self)
+        #self.tune = nTune(CP, self)
 
     def reset(self):
         self.i_lqr = 0.0
@@ -48,7 +48,7 @@ class LatControlLQR():
 
     def update(self, active, CS, CP, path_plan):
 
-        self.tune.check()
+        #self.tune.check()
 
         lqr_log = log.ControlsState.LateralLQRState.new_message()
 
@@ -61,7 +61,7 @@ class LatControlLQR():
         self.angle_steers_des = path_plan.angleSteers - path_plan.angleOffset
         steering_angle -= path_plan.angleOffset
 
-        torque_scale = min(torque_scale, interp(abs(self.angle_steers_des), [5., 45.], [0.6, 1.2]))
+        #torque_scale = min(torque_scale, interp(abs(self.angle_steers_des), [5., 45.], [0.6, 1.2]))
 
         # Update Kalman filter
         angle_steers_k = float(self.C.dot(self.x_hat))

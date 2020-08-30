@@ -41,6 +41,7 @@ def calc_d_poly(l_poly, r_poly, p_poly, l_prob, r_prob, lane_width, v_ego):
 
   lr_prob = l_prob + r_prob - l_prob * r_prob
 
+  # neokii
   if lr_prob > 0.7:
     lr_prob = min(lr_prob * 1.3, 1.0)
 

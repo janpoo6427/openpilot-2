@@ -430,17 +430,20 @@ struct CarParams {
   }
 
   struct LateralLQRTuning {
-    scale @0 :Float32;
-    ki @1 :Float32;
-    dcGain @2 :Float32;
+
+    scaleBP @0 :List(Float32);
+    scaleV @1 :List(Float32);
+
+    ki @2 :Float32;
+    dcGain @3 :Float32;
 
     # State space system
-    a @3 :List(Float32);
-    b @4 :List(Float32);
-    c @5 :List(Float32);
+    a @4 :List(Float32);
+    b @5 :List(Float32);
+    c @6 :List(Float32);
 
-    k @6 :List(Float32);  # LQR gain
-    l @7 :List(Float32);  # Kalman gain
+    k @7 :List(Float32);  # LQR gain
+    l @8 :List(Float32);  # Kalman gain
   }
 
   enum SafetyModel {

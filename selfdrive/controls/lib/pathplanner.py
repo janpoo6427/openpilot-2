@@ -16,7 +16,7 @@ LaneChangeBSM = log.PathPlan.LaneChangeBSM
 
 LOG_MPC = os.environ.get('LOG_MPC', False)
 
-LANE_CHANGE_SPEED_MIN = 50 * CV.KPH_TO_MS
+LANE_CHANGE_SPEED_MIN = 60 * CV.KPH_TO_MS
 LANE_CHANGE_TIME_MAX = 10.
 
 DESIRES = {
@@ -94,8 +94,7 @@ class PathPlanner():
 
     # Run MPC
     self.angle_steers_des_prev = self.angle_steers_des_mpc
-    #VM.update_params(sm['liveParameters'].stiffnessFactor, sm['liveParameters'].steerRatio)
-    VM.update_params(sm['liveParameters'].stiffnessFactor, CP.steerRatio)
+    VM.update_params(sm['liveParameters'].stiffnessFactor, sm['liveParameters'].steerRatio)
 
     curvature_factor = VM.curvature_factor(v_ego)
 

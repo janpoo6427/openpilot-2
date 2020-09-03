@@ -228,11 +228,11 @@ static void ui_init(UIState *s) {
   s->driverstate_sock = SubSocket::create(s->ctx, "driverState");
   s->dmonitoring_sock = SubSocket::create(s->ctx, "dMonitoringState");
   s->offroad_sock = PubSocket::create(s->ctx, "offroadLayout");
-  s->carcontrol_sock = SubSocket::create(s->ctx, "carControl");
+  //s->carcontrol_sock = SubSocket::create(s->ctx, "carControl");
   s->gpsLocationExternal_sock = SubSocket::create(s->ctx, "gpsLocationExternal");
   s->carstate_sock = SubSocket::create(s->ctx, "carState");
   s->liveParameters_sock = SubSocket::create(s->ctx, "liveParameters");
-
+  s->pathPlan_sock = SubSocket::create(s->ctx, "pathPlan");
 
 
   assert(s->model_sock != NULL);
@@ -246,10 +246,11 @@ static void ui_init(UIState *s) {
   assert(s->driverstate_sock != NULL);
   assert(s->dmonitoring_sock != NULL);
   assert(s->offroad_sock != NULL);
-  assert(s->carcontrol_sock != NULL);
+  //assert(s->carcontrol_sock != NULL);
   assert(s->gpsLocationExternal_sock != NULL);
   assert(s->carstate_sock != NULL);
   assert(s->liveParameters_sock != NULL);
+  assert(s->pathPlan_sock != NULL);
 
   s->poller = Poller::create({
                               s->model_sock,
@@ -262,10 +263,11 @@ static void ui_init(UIState *s) {
                               s->ubloxgnss_sock,
                               s->driverstate_sock,
                               s->dmonitoring_sock,
-                              s->carcontrol_sock,
+                              //s->carcontrol_sock,
                               s->gpsLocationExternal_sock,
                               s->carstate_sock,
-                              s->liveParameters_sock
+                              s->liveParameters_sock,
+                              s->pathPlan_sock
                              });
 
 #ifdef SHOW_SPEEDLIMIT
@@ -459,21 +461,12 @@ void handle_message(UIState *s,  Message* msg) {
     scene.angleSteers = data.getAngleSteers();
     scene.angleSteersDes = data.getAngleSteersDes();
 
-    auto l_pid = data.getLateralControlState().getPidState();
-
-    scene.pid_p = l_pid.getP();
-    scene.pid_i = l_pid.getI();
-    scene.pid_f = l_pid.getF();
-    scene.pid_d = l_pid.getD();
-    scene.pid_output = l_pid.getOutput();
-
     scene.steerOverride = data.getSteerOverride();
-    scene.output_scale = l_pid.getOutput();
 
     scene.pCurvature = data.getPCurvature();
     scene.curvMaxSpeed = data.getCurvMaxSpeed();
 
-    scene.indi = data.getLateralControlState().getIndiState();
+    //scene.indi = data.getLateralControlState().getIndiState();
     scene.lqr = data.getLateralControlState().getLqrState();
 
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
@@ -546,7 +539,8 @@ void handle_message(UIState *s,  Message* msg) {
     scene.thermalStatus = data.getThermalStatus();
     scene.paTemp = data.getPa0();
 
-    scene.maxCpuTemp = (data.getCpu0() + data.getCpu1() + data.getCpu2() + data.getCpu3()) / 4;
+    scene.cpuTemp = (data.getCpu0() + data.getCpu1() + data.getCpu2() + data.getCpu3()) / 4;
+    scene.cpuPerc = data.getCpuPerc();
     scene.maxBatTemp = data.getBat();
 
     s->thermal_started = data.getStarted();
@@ -557,14 +551,22 @@ void handle_message(UIState *s,  Message* msg) {
     scene.lp_angleOffset = data.getAngleOffset();
     scene.lp_stiffnessFactor = data.getStiffnessFactor();
   }
-  else if (which == cereal::Event::CAR_CONTROL){
+  /*else if (which == cereal::Event::CAR_CONTROL){
     auto data = event.getCarControl();
     scene.actuators = data.getActuators();
-  }
+  }*/
   else if (which == cereal::Event::CAR_STATE)
   {
     auto data = event.getCarState();
     scene.brakeLights = data.getBrakeLights();
+    scene.steeringTorqueEps = data.getSteeringTorqueEps();
+  }
+  else if (which == cereal::Event::PATH_PLAN)
+  {
+    auto data = event.getPathPlan();
+    scene.laneWidth = data.getLaneWidth();
+    scene.l_prob = data.getLProb();
+    scene.r_prob = data.getRProb();
   }
   else if (which == cereal::Event::UBLOX_GNSS) {
     auto data = event.getUbloxGnss();
@@ -1015,11 +1017,6 @@ int main(int argc, char* argv[]) {
     // poll for touch events
     int touch_x = -1, touch_y = -1;
     int touched = touch_poll(&touch, &touch_x, &touch_y, 0);
-    if (touched == 1) {
-      set_awake(s, true);
-      handle_sidebar_touch(s, touch_x, touch_y);
-      handle_vision_touch(s, touch_x, touch_y);
-    }
 
     if (!s->started) {
       // always process events offroad
@@ -1059,10 +1056,21 @@ int main(int argc, char* argv[]) {
 
     // Don't waste resources on drawing in case screen is off
     if (s->awake) {
-      dashcam(s, touch_x, touch_y);
+
+      if(dashcam(s, touch_x, touch_y)) {
+        touched = 0;
+        set_awake(s, true);
+      }
+
       ui_draw(s);
       glFinish();
       should_swap = true;
+    }
+
+    if (touched == 1) {
+      set_awake(s, true);
+      handle_sidebar_touch(s, touch_x, touch_y);
+      handle_vision_touch(s, touch_x, touch_y);
     }
 
     if (s->volume_timeout > 0) {

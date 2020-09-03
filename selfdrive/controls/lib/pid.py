@@ -1,6 +1,8 @@
 import time
 import numpy as np
 from common.numpy_fast import clip, interp
+from common.realtime import DT_CTRL
+
 
 def apply_deadzone(error, deadzone):
   if error > deadzone:
@@ -28,6 +30,7 @@ class PIController():
     self.convert = convert
     self.previous_error = None
     self.previous_time = None
+    self.frame = 0
 
     self.reset()
 
@@ -62,6 +65,7 @@ class PIController():
 
     self.previous_error = None
     self.previous_time = None
+    self.frame = 0
 
   def update(self, setpoint, measurement, speed=0.0, check_saturation=True, override=False, feedforward=0., deadzone=0., freeze_integrator=False):
     self.speed = speed
@@ -89,18 +93,16 @@ class PIController():
     control = self.p + self.f + self.i
 
     # d gain
-    current_time = time.time()
+    current_time = self.frame * DT_CTRL
 
     if self.previous_time is not None and self.previous_error is not None:
       dt = current_time - self.previous_time
 
-      if dt > 0.0:
-        de = error - self.previous_error
-        cd = de / dt
+      de = error - self.previous_error
+      cd = de / dt
 
-        self.d = cd * self.k_d
-
-        control += self.d
+      self.d = cd * self.k_d
+      control += self.d
 
     self.previous_time = current_time
     self.previous_error = error
@@ -111,5 +113,7 @@ class PIController():
     self.saturated = self._check_saturation(control, check_saturation, error)
 
     self.control = clip(control, self.neg_limit, self.pos_limit)
+
+    self.frame += 1
 
     return self.control

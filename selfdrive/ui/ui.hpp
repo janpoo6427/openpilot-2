@@ -166,27 +166,21 @@ typedef struct UIScene {
   uint8_t athenaStatus;
 
   // pathcoloring
-  float output_scale;
   bool steerOverride;
 
   // dev ui
-  uint16_t maxCpuTemp;
+  uint16_t cpuTemp;
+  uint16_t cpuPerc;
   uint32_t maxBatTemp;
 
   float angleSteers;
   float angleSteersDes;
   bool brakeLights;
 
-  float pid_p;
-  float pid_i;
-  float pid_f;
-  float pid_d;
-  float pid_output;
-
   float pCurvature;
   float curvMaxSpeed;
 
-  cereal::CarControl::Actuators::Reader actuators;
+  //cereal::CarControl::Actuators::Reader actuators;
 
   float gpsAccuracy;
   bool recording;
@@ -197,8 +191,11 @@ typedef struct UIScene {
   float lp_stiffnessFactor;
   float lp_angleOffset;
 
-  cereal::ControlsState::LateralINDIState::Reader indi;
+  //cereal::ControlsState::LateralINDIState::Reader indi;
   cereal::ControlsState::LateralLQRState::Reader lqr;
+
+  float laneWidth, l_prob, r_prob;
+  float steeringTorqueEps;
 
 } UIScene;
 
@@ -261,6 +258,7 @@ typedef struct UIState {
   SubSocket *gpsLocationExternal_sock;
   SubSocket *carstate_sock;
   SubSocket *liveParameters_sock;
+  SubSocket *pathPlan_sock;
 
   Poller * poller;
   Poller * ublox_poller;

@@ -153,24 +153,26 @@ class CarInterface(CarInterfaceBase):
 
     ret.lateralTuning.init('lqr')
 
-    ret.lateralTuning.lqr.scale = 1800.0
-    ret.lateralTuning.lqr.ki = 0.005
+    ret.lateralTuning.lqr.scaleBP = [20.*CV.KPH_TO_MS, 60.*CV.KPH_TO_MS]
+    ret.lateralTuning.lqr.scaleV = [2000.0, 1600.0]
+
+    ret.lateralTuning.lqr.ki = 0.003
 
     ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
     ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
     ret.lateralTuning.lqr.c = [1., 0.]
-    ret.lateralTuning.lqr.k = [-105.0, 450.0]
+    ret.lateralTuning.lqr.k = [-103.0, 450.0]
     ret.lateralTuning.lqr.l = [0.22, 0.318]
     ret.lateralTuning.lqr.dcGain = 0.003
 
     ret.steerRatio = 14.5
-    ret.steerActuatorDelay = 0.3
+    ret.steerActuatorDelay = 0.35
     ret.steerLimitTimer = 1.5
 
     ret.steerRateCost = 0.6
 
-    ret.steerMaxBP = [0.]
-    ret.steerMaxV = [1.5]
+    ret.steerMaxBP = [30.*CV.KPH_TO_MS, 60*CV.KPH_TO_MS]
+    ret.steerMaxV = [1.0, 1.3]
 
 
 
@@ -232,8 +234,8 @@ class CarInterface(CarInterfaceBase):
 
     # most HKG cars has no long control, it is safer and easier to engage by main on
     ret.cruiseState.enabled = ret.cruiseState.available if not self.CC.longcontrol else ret.cruiseState.enabled
-    # some Optima only has blinker flash signal
-    if self.CP.carFingerprint == CAR.KIA_OPTIMA:
+
+    if self.CC.flashBlinker:
       ret.leftBlinker = self.CS.left_blinker_flash or self.CS.prev_left_blinker and self.CC.turning_signal_timer
       ret.rightBlinker = self.CS.right_blinker_flash or self.CS.prev_right_blinker and self.CC.turning_signal_timer
 

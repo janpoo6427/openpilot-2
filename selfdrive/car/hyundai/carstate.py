@@ -151,6 +151,7 @@ class CarState(CarStateBase):
     self.lkas_error = cp_cam.vl["LKAS11"]["CF_Lkas_LdwsSysState"] == 7
     if not self.lkas_error:
       self.lkas_button_on = cp_cam.vl["LKAS11"]["CF_Lkas_LdwsSysState"]
+
     self.left_blinker_flash = cp.vl["CGW1"]['CF_Gway_TurnSigLh']
     self.right_blinker_flash = cp.vl["CGW1"]['CF_Gway_TurnSigRh']
 

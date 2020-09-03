@@ -8,6 +8,8 @@
 #include <map>
 #include "common/util.h"
 
+#define DEBUG_UI 1
+
 #define NANOVG_GLES3_IMPLEMENTATION
 
 #include "nanovg_gl.h"
@@ -595,16 +597,36 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
         char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-      if((int)(scene->maxCpuTemp/10) > 80) {
+      if((int)(scene->cpuTemp/10) > 80) {
         val_color = nvgRGBA(255, 188, 3, 200);
       }
-      if((int)(scene->maxCpuTemp/10) > 92) {
+      if((int)(scene->cpuTemp/10) > 92) {
         val_color = nvgRGBA(255, 0, 0, 200);
       }
       // temp is alway in C * 10
-      snprintf(val_str, sizeof(val_str), "%d°C", (int)(scene->maxCpuTemp/10));
+      snprintf(val_str, sizeof(val_str), "%d°C", (int)(scene->cpuTemp/10));
       snprintf(uom_str, sizeof(uom_str), "");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU TEMP",
+        bb_rx, bb_ry, bb_uom_dx,
+        val_color, lab_color, uom_color,
+        value_fontSize, label_fontSize, uom_fontSize );
+    bb_ry = bb_y + bb_h;
+  }
+
+  //add CPU Usage
+  if (true) {
+        char val_str[16];
+    char uom_str[6];
+    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
+      if((int)(scene->cpuTemp/10) > 90) {
+        val_color = nvgRGBA(255, 188, 3, 200);
+      }
+      if((int)(scene->cpuTemp/10) > 95) {
+        val_color = nvgRGBA(255, 0, 0, 200);
+      }
+      snprintf(val_str, sizeof(val_str), "%d%%", (int)(scene->cpuPerc));
+      snprintf(uom_str, sizeof(uom_str), "");
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU USAGE",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -697,7 +719,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   nvgStroke(s->vg);
 }
 
-static void bb_ui_draw_L_Extra(UIState *s)
+static void drawLeftDebug(UIState *s)
 {
     const UIScene *scene = &s->scene;
 
@@ -711,49 +733,6 @@ static void bb_ui_draw_L_Extra(UIState *s)
     const int text_x = x + (xo / 2) + (w / 2);
 
     char str[256];
-
-    /*snprintf(str, sizeof(str), "P: %.5f", scene->pid_p);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "I: %.5f", scene->pid_i);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "F: %.5f", scene->pid_f);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "D: %.5f", scene->pid_d);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "O: %.5f", scene->pid_output);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
-
-
-    /*snprintf(str, sizeof(str), "RS: %.5f", scene->indi.getRateSetPoint());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "AS: %.5f", scene->indi.getAccelSetPoint());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "AE: %.5f", scene->indi.getAccelError());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "DO: %.5f", scene->indi.getDelayedOutput());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "D: %.5f", scene->indi.getDelta());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
-    snprintf(str, sizeof(str), "O: %.5f", scene->indi.getOutput());
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);*/
 
     ///////////
     // LQR
@@ -770,15 +749,15 @@ static void bb_ui_draw_L_Extra(UIState *s)
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
-    snprintf(str, sizeof(str), "Sat: %d", scene->lqr.getSaturated() ? 1 : 0);
-    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
-
-    y += height;
     snprintf(str, sizeof(str), "CURV: %.3f", scene->pCurvature * 1000.);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
     y += height;
     snprintf(str, sizeof(str), "sR: %.3f", scene->lp_steerRatio);
+    ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+    y += height;
+    snprintf(str, sizeof(str), "Lane: %.2f, %.2f", scene->l_prob, scene->r_prob);
     ui_draw_text(s->vg, text_x, y, str, 25 * 2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 }
 
@@ -792,11 +771,14 @@ static void bb_ui_draw_UI(UIState *s)
 
   const int bb_dmr_w = 180;
   const int bb_dmr_x = scene->ui_viz_rx + scene->ui_viz_rw - bb_dmr_w - (bdr_is * 2);
-  const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 220;
+  const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 100;
 
   bb_ui_draw_measures_left(s, bb_dml_x, bb_dml_y, bb_dml_w);
   bb_ui_draw_measures_right(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
-  bb_ui_draw_L_Extra(s);
+
+#if DEBUG_UI
+  drawLeftDebug(s);
+#endif
 }
 
 static void ui_draw_vision_maxspeed(UIState *s) {
@@ -935,6 +917,10 @@ static void ui_draw_vision_speed(UIState *s) {
   snprintf(speed_str, sizeof(speed_str), "%d", (int)speed);
   ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 240, speed_str, 96*2.5, COLOR_WHITE, s->font_sans_bold);
   ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 320, s->is_metric?"km/h":"mi/h", 36*2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
+
+  // lane width
+  snprintf(speed_str, sizeof(speed_str), "%.1fm", scene->laneWidth);
+  ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 960, speed_str, 70*2.5, COLOR_WHITE, s->font_sans_bold);
 }
 
 static void ui_draw_vision_event(UIState *s) {
@@ -1034,7 +1020,7 @@ static void ui_draw_driver_view(UIState *s) {
 static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
   const int brake_size = 96;
-  const int brake_x = (scene->ui_viz_rx + (brake_size * 5) + (bdr_is * 4));
+  const int brake_x = (scene->ui_viz_rx + (brake_size * 3) + (bdr_is * 4));
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
@@ -1075,7 +1061,7 @@ static void ui_draw_vision_header(UIState *s) {
   ui_draw_vision_speedlimit(s);
 #endif
   ui_draw_vision_speed(s);
-  ui_draw_vision_event(s);
+  //ui_draw_vision_event(s);
 }
 
 static void ui_draw_vision_footer(UIState *s) {

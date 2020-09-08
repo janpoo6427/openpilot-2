@@ -613,26 +613,6 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
     bb_ry = bb_y + bb_h;
   }
 
-  //add CPU Usage
-  if (true) {
-        char val_str[16];
-    char uom_str[6];
-    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-      if((int)(scene->cpuTemp/10) > 90) {
-        val_color = nvgRGBA(255, 188, 3, 200);
-      }
-      if((int)(scene->cpuTemp/10) > 95) {
-        val_color = nvgRGBA(255, 0, 0, 200);
-      }
-      snprintf(val_str, sizeof(val_str), "%d%%", (int)(scene->cpuPerc));
-      snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU USAGE",
-        bb_rx, bb_ry, bb_uom_dx,
-        val_color, lab_color, uom_color,
-        value_fontSize, label_fontSize, uom_fontSize );
-    bb_ry = bb_y + bb_h;
-  }
-
    //add battery temperature
   if (true) {
     char val_str[16];
@@ -771,7 +751,7 @@ static void bb_ui_draw_UI(UIState *s)
 
   const int bb_dmr_w = 180;
   const int bb_dmr_x = scene->ui_viz_rx + scene->ui_viz_rw - bb_dmr_w - (bdr_is * 2);
-  const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 100;
+  const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 220;
 
   bb_ui_draw_measures_left(s, bb_dml_x, bb_dml_y, bb_dml_w);
   bb_ui_draw_measures_right(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
@@ -919,8 +899,8 @@ static void ui_draw_vision_speed(UIState *s) {
   ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 320, s->is_metric?"km/h":"mi/h", 36*2.5, COLOR_WHITE_ALPHA(200), s->font_sans_regular);
 
   // lane width
-  snprintf(speed_str, sizeof(speed_str), "%.1fm", scene->laneWidth);
-  ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 960, speed_str, 70*2.5, COLOR_WHITE, s->font_sans_bold);
+  //snprintf(speed_str, sizeof(speed_str), "%.1fm", scene->laneWidth);
+  //ui_draw_text(s->vg, viz_speed_x + viz_speed_w / 2, 960, speed_str, 70*2.5, COLOR_WHITE, s->font_sans_bold);
 }
 
 static void ui_draw_vision_event(UIState *s) {
@@ -1020,7 +1000,7 @@ static void ui_draw_driver_view(UIState *s) {
 static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
   const int brake_size = 96;
-  const int brake_x = (scene->ui_viz_rx + (brake_size * 3) + (bdr_is * 4));
+  const int brake_x = (scene->ui_viz_rx + (brake_size * 4) + (bdr_is * 4));
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
@@ -1061,7 +1041,7 @@ static void ui_draw_vision_header(UIState *s) {
   ui_draw_vision_speedlimit(s);
 #endif
   ui_draw_vision_speed(s);
-  //ui_draw_vision_event(s);
+  ui_draw_vision_event(s);
 }
 
 static void ui_draw_vision_footer(UIState *s) {

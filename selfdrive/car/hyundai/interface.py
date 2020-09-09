@@ -60,13 +60,18 @@ class CarInterface(CarInterfaceBase):
       ret.minSteerSpeed = 32 * CV.MPH_TO_MS
 
     elif candidate == CAR.HYUNDAI_GENESIS:
-      ret.mass = 2060. + STD_CARGO_KG
+      ret.mass = 1900. + STD_CARGO_KG
       ret.wheelbase = 3.01
       ret.steerRatio = 16.5
       ret.minSteerSpeed = 60 * CV.KPH_TO_MS
 
-    elif candidate in [CAR.GENESIS_G90, CAR.GENESIS_G80]:
-      ret.mass = 2200
+    elif candidate == CAR.GENESIS_G80:
+      ret.mass = 1855. + STD_CARGO_KG
+      ret.wheelbase = 3.01
+      ret.steerRatio = 15.0
+
+    elif candidate == CAR.GENESIS_G90:
+      ret.mass = 2200.
       ret.wheelbase = 3.15
       ret.steerRatio = 12.069
 

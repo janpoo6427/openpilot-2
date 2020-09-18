@@ -172,7 +172,7 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
   if (s->scene.hwType == cereal::HealthData::HwType::UNKNOWN) {
     panda_severity = 2;
-    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\nV미연결");
+    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\n연결안됨");
   } else {
     if (s->started){
       if (s->scene.satelliteCount < 6) {
@@ -193,7 +193,7 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
 static void ui_draw_sidebar_connectivity(UIState *s) {
   if (s->scene.athenaStatus == NET_DISCONNECTED) {
-    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "네트워크\n미연결");
+    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "네트워크\n연결안됨");
   } else if (s->scene.athenaStatus == NET_CONNECTED) {
     ui_draw_sidebar_metric(s, NULL, NULL, 0, 180+158, "네트워크\n연결됨");
   } else {

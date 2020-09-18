@@ -158,7 +158,7 @@ static void ui_draw_sidebar_temp_metric(UIState *s) {
   const int temp_y_offset = 45;
   snprintf(temp_value_str, sizeof(temp_value_str), "%d", s->scene.thermal.getPa0());
   snprintf(temp_value_unit, sizeof(temp_value_unit), "%s", "°C");
-  //snprintf(temp_label_str, sizeof(temp_label_str), "%s", "TEMP");
+  //snprintf(temp_label_str, sizeof(temp_label_str), "%s", "온도");
   temp_label_str[0] = 0;
   strcat(temp_value_str, temp_value_unit);
 
@@ -172,19 +172,19 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
   if (s->scene.hwType == cereal::HealthData::HwType::UNKNOWN) {
     panda_severity = 2;
-    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "NO\nVEHICLE");
+    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\nV미연결");
   } else {
     if (s->started){
       if (s->scene.satelliteCount < 6) {
         panda_severity = 1;
-        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nNO GPS");
+        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "백판다\n연결됨");
       } else if (s->scene.satelliteCount >= 6) {
         panda_severity = 0;
-        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nGOOD GPS");
+        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "흑판다\nGOOD GPS");
       }
     } else {
       panda_severity = 0;
-      snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nONLINE");
+      snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\n연결됨");
     }
   }
 
@@ -193,11 +193,11 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
 static void ui_draw_sidebar_connectivity(UIState *s) {
   if (s->scene.athenaStatus == NET_DISCONNECTED) {
-    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "CONNECT\nOFFLINE");
+    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "네트워크\n미연결");
   } else if (s->scene.athenaStatus == NET_CONNECTED) {
-    ui_draw_sidebar_metric(s, NULL, NULL, 0, 180+158, "CONNECT\nONLINE");
+    ui_draw_sidebar_metric(s, NULL, NULL, 0, 180+158, "네트워크\n연결됨");
   } else {
-    ui_draw_sidebar_metric(s, NULL, NULL, 2, 180+158, "CONNECT\nERROR");
+    ui_draw_sidebar_metric(s, NULL, NULL, 2, 180+158, "네트워크\n");
   }
 }
 

@@ -560,37 +560,37 @@ EVENTS = {
 
   EventName.focusRecoverActive: {
     ET.WARNING: Alert(
-      "TAKE CONTROL",
-      "Attempting Refocus: Camera Focus Invalid",
+      "핸들을 잡아주세요",
+      "카메라 포커스상태를 점검하세요",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOW, VisualAlert.steerRequired, AudibleAlert.chimeWarning1, .4, 2., 3.),
   },
 
   EventName.outOfSpace: {
-    ET.NO_ENTRY: NoEntryAlert("Out of Storage Space",
+    ET.NO_ENTRY: NoEntryAlert("저장공간 부족",
                               duration_hud_alert=0.),
   },
 
   EventName.belowEngageSpeed: {
-    ET.NO_ENTRY: NoEntryAlert("Speed Too Low"),
+    ET.NO_ENTRY: NoEntryAlert("속도를 높여주세요"),
   },
 
   EventName.neosUpdateRequired: {
     ET.PERMANENT: Alert(
-      "NEOS Update Required",
-      "Please Wait for Update",
+      "NEOS버전 업데이트가 필요합니다",
+      "NEOS버전 업데이트를 확인하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.HIGHEST, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("NEOS Update Required"),
+    ET.NO_ENTRY: NoEntryAlert("NEOS버전 업데이트가 필요합니다"),
   },
 
   EventName.sensorDataInvalid: {
     ET.PERMANENT: Alert(
-      "No Data from Device Sensors",
-      "Reboot your Device",
+      "EON센서데이터 오류",
+      "EON을 재부팅하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2, creation_delay=1.),
-    ET.NO_ENTRY: NoEntryAlert("No Data from Device Sensors"),
+    ET.NO_ENTRY: NoEntryAlert("EON센서데이터 오류"),
   },
 
   EventName.noGps: {
@@ -599,221 +599,220 @@ EVENTS = {
 
   EventName.soundsUnavailable: {
     ET.PERMANENT: Alert(
-      "Speaker not found",
-      "Reboot your Device",
+      "스피커가 감지되지않습니다",
+      "EON을 재부팅하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("Speaker not found"),
+    ET.NO_ENTRY: NoEntryAlert("스피커가 감지되지않습니다"),
   },
 
   EventName.tooDistracted: {
-    ET.NO_ENTRY: NoEntryAlert("Distraction Level Too High"),
+    ET.NO_ENTRY: NoEntryAlert("방해 수준이 너무높음"),
   },
 
   EventName.overheat: {
-    ET.SOFT_DISABLE: SoftDisableAlert("System Overheated"),
-    ET.NO_ENTRY: NoEntryAlert("System overheated"),
+    ET.SOFT_DISABLE: SoftDisableAlert("시스템 과열됨"),
+    ET.NO_ENTRY: NoEntryAlert("시스템 과열됨"),
   },
 
   EventName.wrongGear: {
     ET.USER_DISABLE: EngagementAlert(AudibleAlert.chimeDisengage),
-    ET.NO_ENTRY: NoEntryAlert("Gear not D"),
-  },
+    ET.NO_ENTRY: NoEntryAlert("기어를 [D]로 변경하세요",
 
   EventName.calibrationInvalid: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Calibration Invalid: Reposition Device and Recalibrate"),
-    ET.NO_ENTRY: NoEntryAlert("Calibration Invalid: Reposition Device & Recalibrate"),
+    ET.SOFT_DISABLE: SoftDisableAlert("캘리브레이션 에러 : EON 위치변경 및 캘리브레이션을 다시하세요"),
+    ET.NO_ENTRY: NoEntryAlert("캘리브레이션 에러 : EON 위치변경 및 캘리브레이션을 다시하세요"),
   },
 
   EventName.calibrationIncomplete: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Calibration in Progress"),
+    ET.SOFT_DISABLE: SoftDisableAlert("캘리브레이션 진행중입니다"),
     ET.PERMANENT: calibration_incomplete_alert,
-    ET.NO_ENTRY: NoEntryAlert("Calibration in Progress"),
+    ET.NO_ENTRY: NoEntryAlert("캘리브레이션 진행중입니다",
   },
 
   EventName.doorOpen: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Door Open"),
-    ET.NO_ENTRY: NoEntryAlert("Door open"),
+    ET.SOFT_DISABLE: SoftDisableAlert("도어 열림"),
+    ET.NO_ENTRY: NoEntryAlert("도어 열림"),
   },
 
   EventName.seatbeltNotLatched: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Seatbelt Unlatched"),
-    ET.NO_ENTRY: NoEntryAlert("Seatbelt unlatched"),
+    ET.SOFT_DISABLE: SoftDisableAlert("안전벨트를 착용해주세요"),
+    ET.NO_ENTRY: NoEntryAlert("안전벨트를 착용해주세요",
   },
 
   EventName.espDisabled: {
-    ET.SOFT_DISABLE: SoftDisableAlert("ESP Off"),
-    ET.NO_ENTRY: NoEntryAlert("ESP Off"),
+    ET.SOFT_DISABLE: SoftDisableAlert("ESP 꺼짐"),
+    ET.NO_ENTRY: NoEntryAlert("ESP 꺼짐"),
   },
 
   EventName.lowBattery: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Low Battery"),
-    ET.NO_ENTRY: NoEntryAlert("Low Battery"),
+    ET.SOFT_DISABLE: SoftDisableAlert("배터리 부족"),
+    ET.NO_ENTRY: NoEntryAlert("배터리 부족"),
   },
 
   EventName.commIssue: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Communication Issue between Processes"),
-    ET.NO_ENTRY: NoEntryAlert("Communication Issue between Processes",
+    ET.SOFT_DISABLE: SoftDisableAlert("프로세스간 통신문제"),
+    ET.NO_ENTRY: NoEntryAlert("프로세스간 통신문제",
                               audible_alert=AudibleAlert.chimeDisengage),
   },
 
   EventName.radarCommIssue: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Radar Communication Issue"),
-    ET.NO_ENTRY: NoEntryAlert("Radar Communication Issue",
+    ET.SOFT_DISABLE: SoftDisableAlert("레이더 통신문제"),
+    ET.NO_ENTRY: NoEntryAlert("레이더 통신문제",
                               audible_alert=AudibleAlert.chimeDisengage),
   },
 
   EventName.radarCanError: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Radar Error: Restart the Car"),
-    ET.NO_ENTRY: NoEntryAlert("Radar Error: Restart the Car"),
+    ET.SOFT_DISABLE: SoftDisableAlert("레이더 에러 : 차량을 재가동하세요"),
+    ET.NO_ENTRY: NoEntryAlert("레이더 에러 : 차량을 재가동하세요"),
   },
 
   EventName.radarFault: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Radar Error: Restart the Car"),
-    ET.NO_ENTRY : NoEntryAlert("Radar Error: Restart the Car"),
+    ET.SOFT_DISABLE: SoftDisableAlert("레이더 에러 : 차량을 재가동하세요"),
+    ET.NO_ENTRY: NoEntryAlert("레이더 에러 : 차량을 재가동하세요"),
   },
 
   EventName.modeldLagging: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Driving model lagging"),
-    ET.NO_ENTRY : NoEntryAlert("Driving model lagging"),
+    ET.SOFT_DISABLE: SoftDisableAlert("주행모델 지연됨"),
+    ET.NO_ENTRY : NoEntryAlert("주행모델 지연됨"),
   },
 
   EventName.posenetInvalid: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Vision Model Output Uncertain"),
-    ET.NO_ENTRY: NoEntryAlert("Vision Model Output Uncertain"),
+    ET.SOFT_DISABLE: SoftDisableAlert("차선인식상태가 좋지않으니 주의운전하세요",
+    ET.NO_ENTRY: NoEntryAlert("차선인식상태가 좋지않으니 주의운전하세요",
   },
 
   EventName.deviceFalling: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Device Fell Off Mount"),
-    ET.NO_ENTRY: NoEntryAlert("Device Fell Off Mount"),
+    ET.SOFT_DISABLE: SoftDisableAlert("장치가 마운트에서 떨어짐"),
+    ET.NO_ENTRY: NoEntryAlert("장치가 마운트에서 떨어짐"),
   },
 
   EventName.lowMemory: {
-    ET.SOFT_DISABLE: SoftDisableAlert("Low Memory: Reboot Your Device"),
+    ET.SOFT_DISABLE: SoftDisableAlert("메모리 부족 : EON을 재부팅하세요"),
     ET.PERMANENT: Alert(
-      "RAM Critically Low",
-      "Reboot your Device",
+      "메모리 매우 낮음",
+      "EON을 재부팅하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY : NoEntryAlert("Low Memory: Reboot Your Device",
+    ET.NO_ENTRY : NoEntryAlert("메모리 부족 : EON을 재부팅하세요",
                                audible_alert=AudibleAlert.chimeDisengage),
   },
 
   EventName.controlsFailed: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Controls Failed"),
-    ET.NO_ENTRY: NoEntryAlert("Controls Failed"),
+    ET.SOFT_DISABLE: SoftDisableAlert("컨트롤 오류"),
+    ET.NO_ENTRY: NoEntryAlert("컨트롤 오류"),
   },
 
   EventName.controlsMismatch: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Controls Mismatch"),
+    ET.SOFT_DISABLE: SoftDisableAlert("컨트롤 불일치"),
   },
 
   EventName.canError: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("CAN Error: Check Connections"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("CAN 에러 : 연결상태를 확인하세요"),
     ET.PERMANENT: Alert(
-      "CAN Error: Check Connections",
+      "CAN 에러 : 연결상태를 확인하세요",
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, 0., 0., .2, creation_delay=1.),
-    ET.NO_ENTRY: NoEntryAlert("CAN Error: Check Connections"),
+    ET.NO_ENTRY: NoEntryAlert("CAN 에러 : 연결상태를 확인하세요"),
   },
 
   EventName.steerUnavailable: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("LKAS Fault: Restart the Car"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("LKAS 에러 : 차량을 재가동하세요"),
     ET.PERMANENT: Alert(
-      "LKAS Fault: Restart the car to engage",
+      "LKAS 에러 : 차량을 재가동하세요",
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("LKAS Fault: Restart the Car"),
+    ET.NO_ENTRY: NoEntryAlert("LKAS 에러 : 차량을 재가동하세요"),
   },
 
   EventName.brakeUnavailable: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Cruise Fault: Restart the Car"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("크루즈 에러 : 차량을 재가동하세요"),
     ET.PERMANENT: Alert(
-      "Cruise Fault: Restart the car to engage",
+      "크루즈 에러 : 차량을 재가동하세요",
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Restart the Car"),
+    ET.NO_ENTRY: NoEntryAlert("크루즈 에러 : 차량을 재가동하세요"),
   },
 
   EventName.gasUnavailable: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Gas Fault: Restart the Car"),
-    ET.NO_ENTRY: NoEntryAlert("Gas Error: Restart the Car"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("가속패달 에러 : 차량을 재가동하세요"),
+    ET.NO_ENTRY: NoEntryAlert("가속패달 에러 : 차량을 재가동하세요"),
   },
 
   EventName.reverseGear: {
     ET.USER_DISABLE: EngagementAlert(AudibleAlert.chimeDisengage),
-    ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
+    ET.NO_ENTRY: NoEntryAlert("기어 [R] 상태"),
   },
 
   EventName.cruiseDisabled: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Cruise Is Off"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("크루즈 꺼짐"),
   },
 
   EventName.plannerError: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Planner Solution Error"),
-    ET.NO_ENTRY: NoEntryAlert("Planner Solution Error"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("플래너 솔루션 에러"),
+    ET.NO_ENTRY: NoEntryAlert("플래너 솔루션 에러"),
   },
 
   EventName.relayMalfunction: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Harness Malfunction"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("하네스 오작동"),
     ET.PERMANENT: Alert(
-      "Harness Malfunction",
-      "Please Check Hardware",
+      "하네스 오작동",
+      "연결상태를 점검하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("Harness Malfunction"),
+    ET.NO_ENTRY: NoEntryAlert("하네스 오작동"),
   },
 
   EventName.noTarget: {
     ET.IMMEDIATE_DISABLE: Alert(
-      "openpilot Canceled",
-      "No close lead car",
+      "오픈파일럿 사용불가",
+      "근접 앞차량이 없습니다",
       AlertStatus.normal, AlertSize.mid,
       Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
-    ET.NO_ENTRY : NoEntryAlert("No Close Lead Car"),
+    ET.NO_ENTRY : NoEntryAlert("근접 앞차량이 없습니다"),
   },
 
   EventName.speedTooLow: {
     ET.IMMEDIATE_DISABLE: Alert(
-      "openpilot Canceled",
-      "Speed too low",
+      "오픈파일럿 사용불가",
+      "속도를 높이고 재가동하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
   },
 
   EventName.speedTooHigh: {
     ET.WARNING: Alert(
-      "Speed Too High",
-      "Slow down to resume operation",
+      "속도가 너무 높습니다",
+      "속도를 줄여주세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.chimeWarning2Repeat, 2.2, 3., 4.),
     ET.NO_ENTRY: Alert(
-      "Speed Too High",
-      "Slow down to engage",
+      "속도가 너무 높습니다",
+      "속도를 줄이고 재가동하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOW, VisualAlert.none, AudibleAlert.chimeError, .4, 2., 3.),
   },
 
   EventName.internetConnectivityNeeded: {
     ET.PERMANENT: Alert(
-      "Please connect to Internet",
-      "An Update Check Is Required to Engage",
+      "인터넷을 연결하세요",
+      "활성화를위해 업데이트 확인이 필요합니다",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("Please Connect to Internet",
+    ET.NO_ENTRY: NoEntryAlert("인터넷을 연결하세요",
                               audible_alert=AudibleAlert.chimeDisengage),
   },
 
   EventName.lowSpeedLockout: {
     ET.PERMANENT: Alert(
-      "Cruise Fault: Restart the car to engage",
+      "크루즈 에러 : 차량을 재가동하세요",
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
-    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Restart the Car"),
+    ET.NO_ENTRY: NoEntryAlert("크루즈 에러 : 차량을 재가동하세요"),
   },
 
 }

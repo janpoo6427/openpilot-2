@@ -618,7 +618,8 @@ EVENTS = {
   EventName.wrongGear: {
     ET.USER_DISABLE: EngagementAlert(AudibleAlert.chimeDisengage),
     ET.NO_ENTRY: NoEntryAlert("기어를 [D]로 변경하세요",
-
+  },
+                              
   EventName.calibrationInvalid: {
     ET.SOFT_DISABLE: SoftDisableAlert("캘리브레이션 에러 : EON 위치변경 및 캘리브레이션을 다시하세요"),
     ET.NO_ENTRY: NoEntryAlert("캘리브레이션 에러 : EON 위치변경 및 캘리브레이션을 다시하세요"),

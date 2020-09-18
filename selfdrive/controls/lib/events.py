@@ -617,7 +617,7 @@ EVENTS = {
 
   EventName.wrongGear: {
     ET.USER_DISABLE: EngagementAlert(AudibleAlert.chimeDisengage),
-    ET.NO_ENTRY: NoEntryAlert("기어를 [D]로 변경하세요",
+    ET.NO_ENTRY: NoEntryAlert("기어를 [D]로 변경하세요"),
   },
                               
   EventName.calibrationInvalid: {
@@ -628,7 +628,7 @@ EVENTS = {
   EventName.calibrationIncomplete: {
     ET.SOFT_DISABLE: SoftDisableAlert("캘리브레이션 진행중입니다"),
     ET.PERMANENT: calibration_incomplete_alert,
-    ET.NO_ENTRY: NoEntryAlert("캘리브레이션 진행중입니다",
+    ET.NO_ENTRY: NoEntryAlert("캘리브레이션 진행중입니다"),
   },
 
   EventName.doorOpen: {
@@ -638,7 +638,7 @@ EVENTS = {
 
   EventName.seatbeltNotLatched: {
     ET.SOFT_DISABLE: SoftDisableAlert("안전벨트를 착용해주세요"),
-    ET.NO_ENTRY: NoEntryAlert("안전벨트를 착용해주세요",
+    ET.NO_ENTRY: NoEntryAlert("안전벨트를 착용해주세요"),
   },
 
   EventName.espDisabled: {
@@ -679,8 +679,8 @@ EVENTS = {
   },
 
   EventName.posenetInvalid: {
-    ET.SOFT_DISABLE: SoftDisableAlert("차선인식상태가 좋지않으니 주의운전하세요",
-    ET.NO_ENTRY: NoEntryAlert("차선인식상태가 좋지않으니 주의운전하세요",
+    ET.SOFT_DISABLE: SoftDisableAlert("차선인식상태가 좋지않으니 주의운전하세요"),
+    ET.NO_ENTRY: NoEntryAlert("차선인식상태가 좋지않으니 주의운전하세요"),
   },
 
   EventName.deviceFalling: {

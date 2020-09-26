@@ -8,7 +8,24 @@
 #include <map>
 #include "common/util.h"
 
-#define DEBUG_UI 1
+///////////////////////////////////////////////////////
+// UI FEATURES
+
+#define UI_FEATURE_DEBUG_UI 0
+
+#define UI_FEATURE_LEFT_REL_DIST 1
+#define UI_FEATURE_LEFT_REL_SPEED 1
+#define UI_FEATURE_LEFT_STEER_ANGLE 1
+#define UI_FEATURE_LEFT_DESIRE_STEER 1
+
+#define UI_FEATURE_RIGHT_CPU_TEMP 1
+#define UI_FEATURE_RIGHT_BATTERY_TEMP 0
+#define UI_FEATURE_RIGHT_BATTERY_LEVEL 1
+#define UI_FEATURE_RIGHT_GPS_ACCURACY 0
+
+///////////////////////////////////////////////////////
+
+
 
 #define NANOVG_GLES3_IMPLEMENTATION
 
@@ -236,7 +253,7 @@ static void ui_draw_track(UIState *s, bool is_mpc, track_vertices_data *pvd) {
   }
   nvgClosePath(s->vg);
 
-  NVGpaint track_bg;
+  /*NVGpaint track_bg;
   if (is_mpc) {
     // Draw colored MPC track
     const uint8_t *clr = bg_colors[s->status];
@@ -247,6 +264,31 @@ static void ui_draw_track(UIState *s, bool is_mpc, track_vertices_data *pvd) {
     track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
       COLOR_WHITE, COLOR_WHITE_ALPHA(0));
   }
+  nvgFillPaint(s->vg, track_bg);
+  nvgFill(s->vg);*/
+
+  const UIScene *scene = &s->scene;
+
+  NVGpaint track_bg;
+  if (is_mpc) {
+    // Draw colored MPC track Kegman's
+    if (scene->controls_state.getSteerOverride()) {
+      track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
+        nvgRGBA(0, 191, 255, 255), nvgRGBA(0, 95, 128, 50));
+    } else {
+      int torque_scale = (int)fabs(510*(float)scene->lqr.getOutput());
+      int red_lvl = fmin(255, torque_scale);
+      int green_lvl = fmin(255, 510-torque_scale);
+      track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
+        nvgRGBA(          red_lvl,            green_lvl,  0, 255),
+        nvgRGBA((int)(0.5*red_lvl), (int)(0.5*green_lvl), 0, 50));
+    }
+  } else {
+    // Draw white vision track
+    track_bg = nvgLinearGradient(s->vg, vwp_w, vwp_h, vwp_w, vwp_h*.4,
+      nvgRGBA(255, 255, 255, 200), nvgRGBA(255, 255, 255, 50));
+  }
+
   nvgFillPaint(s->vg, track_bg);
   nvgFill(s->vg);
 }
@@ -458,7 +500,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   int bb_uom_dx =  (int)(bb_w /2 - uom_fontSize*2.5) ;
 
   //add visual radar relative distance
-  if (true) {
+  if (UI_FEATURE_LEFT_REL_DIST) {
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -485,7 +527,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   }
 
   //add visual radar relative speed
-  if (true) {
+  if (UI_FEATURE_LEFT_REL_SPEED) {
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -520,7 +562,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   }
 
   //add  steering angle
-  if (true) {
+  if (UI_FEATURE_LEFT_STEER_ANGLE) {
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(0, 255, 0, 200);
@@ -544,7 +586,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   }
 
   //add  desired steering angle
-  if (true) {
+  if (UI_FEATURE_LEFT_DESIRE_STEER) {
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -593,7 +635,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   int bb_uom_dx =  (int)(bb_w /2 - uom_fontSize*2.5) ;
 
   //add CPU temperature
-  if (true) {
+  if (UI_FEATURE_RIGHT_CPU_TEMP) {
         char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -614,7 +656,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   }
 
    //add battery temperature
-  if (true) {
+  if (UI_FEATURE_RIGHT_BATTERY_TEMP) {
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -635,7 +677,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   }
 
   //add battery level
-    if(true) {
+    if(UI_FEATURE_RIGHT_BATTERY_LEVEL) {
     char val_str[16];
     char uom_str[6];
     char bat_lvl[4] = "";
@@ -669,7 +711,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   }
 
   //add grey panda GPS accuracy
-  if (true) {
+  if (UI_FEATURE_RIGHT_GPS_ACCURACY) {
     char val_str[16];
     char uom_str[3];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
@@ -756,7 +798,7 @@ static void bb_ui_draw_UI(UIState *s)
   bb_ui_draw_measures_left(s, bb_dml_x, bb_dml_y, bb_dml_w);
   bb_ui_draw_measures_right(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
 
-#if DEBUG_UI
+#if UI_FEATURE_DEBUG_UI
   drawLeftDebug(s);
 #endif
 }

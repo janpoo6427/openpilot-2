@@ -22,9 +22,9 @@
 #define UI_FEATURE_LEFT_DESIRE_STEER 1
 
 #define UI_FEATURE_RIGHT_CPU_TEMP 1
-#define UI_FEATURE_RIGHT_BATTERY_TEMP 0
+#define UI_FEATURE_RIGHT_BATTERY_TEMP 1
 #define UI_FEATURE_RIGHT_BATTERY_LEVEL 1
-#define UI_FEATURE_RIGHT_GPS_ACCURACY 0
+#define UI_FEATURE_RIGHT_GPS_ACCURACY 1
 
 ///////////////////////////////////////////////////////
 
@@ -617,7 +617,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
 
 
   //finally draw the frame
-  bb_h += 50;
+  bb_h += 40;
   nvgBeginPath(s->vg);
     nvgRoundedRect(s->vg, bb_x, bb_y, bb_w, bb_h, 20);
     nvgStrokeColor(s->vg, nvgRGBA(255,255,255,80));
@@ -736,7 +736,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   }
 
   //finally draw the frame
-  bb_h += 50;
+  bb_h += 40;
   nvgBeginPath(s->vg);
   nvgRoundedRect(s->vg, bb_x, bb_y, bb_w, bb_h, 20);
   nvgStrokeColor(s->vg, nvgRGBA(255,255,255,80));

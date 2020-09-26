@@ -13,6 +13,9 @@
 
 #define UI_FEATURE_DEBUG_UI 0
 
+#define UI_FEATURE_LEFT 1
+#define UI_FEATURE_RIGHT 1
+
 #define UI_FEATURE_LEFT_REL_DIST 1
 #define UI_FEATURE_LEFT_REL_SPEED 1
 #define UI_FEATURE_LEFT_STEER_ANGLE 1
@@ -614,7 +617,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
 
 
   //finally draw the frame
-  bb_h += 20;
+  bb_h += 50;
   nvgBeginPath(s->vg);
     nvgRoundedRect(s->vg, bb_x, bb_y, bb_w, bb_h, 20);
     nvgStrokeColor(s->vg, nvgRGBA(255,255,255,80));
@@ -733,7 +736,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
   }
 
   //finally draw the frame
-  bb_h += 20;
+  bb_h += 50;
   nvgBeginPath(s->vg);
   nvgRoundedRect(s->vg, bb_x, bb_y, bb_w, bb_h, 20);
   nvgStrokeColor(s->vg, nvgRGBA(255,255,255,80));
@@ -795,8 +798,13 @@ static void bb_ui_draw_UI(UIState *s)
   const int bb_dmr_x = scene->ui_viz_rx + scene->ui_viz_rw - bb_dmr_w - (bdr_is * 2);
   const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 220;
 
+#if UI_FEATURE_LEFT
   bb_ui_draw_measures_left(s, bb_dml_x, bb_dml_y, bb_dml_w);
+#endif
+
+#if UI_FEATURE_RIGHT
   bb_ui_draw_measures_right(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
+#endif
 
 #if UI_FEATURE_DEBUG_UI
   drawLeftDebug(s);

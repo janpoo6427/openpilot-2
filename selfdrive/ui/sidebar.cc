@@ -66,12 +66,12 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   const int network_h = 100;
   const char *network_type = network_type_map[s->scene.networkType];
   nvgFillColor(s->vg, COLOR_WHITE);
-  nvgFontSize(s->vg, 48);
+  nvgFontSize(s->vg, 40);
   nvgFontFaceId(s->vg, s->font_sans_regular);
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
 
-  nvgFontSize(s->vg, 40);
+  nvgFontSize(s->vg, 35);
   nvgTextBox(s->vg, network_x-20, network_y + 55, 250, s->scene.wifiIpAddress.c_str(), NULL);
 }
 
@@ -107,13 +107,13 @@ static void ui_draw_sidebar_metric(UIState *s, const char* label_str, const char
     nvgTextBox(s->vg, metric_x + 50, metric_y + 50, metric_w - 60, value_str, NULL);
 
     nvgFillColor(s->vg, COLOR_WHITE);
-    nvgFontSize(s->vg, 48);
+    nvgFontSize(s->vg, 44);
     nvgFontFaceId(s->vg, s->font_sans_regular);
     nvgTextAlign(s->vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
     nvgTextBox(s->vg, metric_x + 50, metric_y + 50 + 66, metric_w - 60, label_str, NULL);
   } else {
     nvgFillColor(s->vg, COLOR_WHITE);
-    nvgFontSize(s->vg, 48);
+    nvgFontSize(s->vg, 44);
     nvgFontFaceId(s->vg, s->font_sans_bold);
     nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
     nvgTextBox(s->vg, metric_x + 35, metric_y + (strchr(message_str, '\n') ? 40 : 50), metric_w - 50, message_str, NULL);
@@ -163,7 +163,7 @@ static void ui_draw_sidebar_temp_metric(UIState *s) {
   const int temp_y_offset = 45;
   snprintf(temp_value_str, sizeof(temp_value_str), "%d", s->scene.paTemp);
   snprintf(temp_value_unit, sizeof(temp_value_unit), "%s", "°C");
-  //snprintf(temp_label_str, sizeof(temp_label_str), "%s", "TEMP");
+  //snprintf(temp_label_str, sizeof(temp_label_str), "%s", "온도");
   temp_label_str[0] = 0;
   strcat(temp_value_str, temp_value_unit);
 
@@ -177,19 +177,19 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
   if (s->scene.hwType == cereal::HealthData::HwType::UNKNOWN) {
     panda_severity = 2;
-    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "NO\nVEHICLE");
+    snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\n연결안됨");
   } else {
     if (s->started){
       if (s->scene.satelliteCount < 6) {
         panda_severity = 1;
-        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nNO GPS");
+        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "백판다\n연결됨");
       } else if (s->scene.satelliteCount >= 6) {
         panda_severity = 0;
-        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nGOOD GPS");
+        snprintf(panda_message_str, sizeof(panda_message_str), "%s", "흑판다\n수신양호");
       }
     } else {
       panda_severity = 0;
-      snprintf(panda_message_str, sizeof(panda_message_str), "%s", "VEHICLE\nONLINE");
+      snprintf(panda_message_str, sizeof(panda_message_str), "%s", "판다\n연결됨");
     }
   }
 
@@ -198,11 +198,11 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
 static void ui_draw_sidebar_connectivity(UIState *s) {
   if (s->scene.athenaStatus == NET_DISCONNECTED) {
-    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "CONNECT\nOFFLINE");
+    ui_draw_sidebar_metric(s, NULL, NULL, 1, 180+158, "네트워크\n연결안됨");
   } else if (s->scene.athenaStatus == NET_CONNECTED) {
-    ui_draw_sidebar_metric(s, NULL, NULL, 0, 180+158, "CONNECT\nONLINE");
+    ui_draw_sidebar_metric(s, NULL, NULL, 0, 180+158, "네트워크\n연결됨");
   } else {
-    ui_draw_sidebar_metric(s, NULL, NULL, 2, 180+158, "CONNECT\nERROR");
+    ui_draw_sidebar_metric(s, NULL, NULL, 2, 180+158, "네트워크\n에러");
   }
 }
 

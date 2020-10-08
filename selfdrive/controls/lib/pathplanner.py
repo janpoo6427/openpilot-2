@@ -9,6 +9,7 @@ from selfdrive.config import Conversions as CV
 from common.params import Params
 import cereal.messaging as messaging
 from cereal import log
+from selfdrive.ntune import nTune
 
 LaneChangeState = log.PathPlan.LaneChangeState
 LaneChangeDirection = log.PathPlan.LaneChangeDirection
@@ -66,6 +67,8 @@ class PathPlanner():
     self.lane_change_BSM = LaneChangeBSM.off
     self.prev_torque_applied = False
 
+    self.tune = nTune(CP)
+    
   def setup_mpc(self):
     self.libmpc = libmpc_py.libmpc
     self.libmpc.init(MPC_COST_LAT.PATH, MPC_COST_LAT.LANE, MPC_COST_LAT.HEADING, self.steer_rate_cost)
@@ -94,8 +97,10 @@ class PathPlanner():
 
     # Run MPC
     self.angle_steers_des_prev = self.angle_steers_des_mpc
-    VM.update_params(sm['liveParameters'].stiffnessFactor, sm['liveParameters'].steerRatio)
-
+    #VM.update_params(sm['liveParameters'].stiffnessFactor, sm['liveParameters'].steerRatio)
+    VM.update_params(sm['liveParameters'].stiffnessFactor, CP.steerRatio)
+    sr = max(self.tune.get('steerRatio'), 0.1)
+    
     curvature_factor = VM.curvature_factor(v_ego)
 
     self.LP.parse_model(sm['model'])

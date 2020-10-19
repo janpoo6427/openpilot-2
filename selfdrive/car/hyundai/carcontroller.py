@@ -1,5 +1,6 @@
 from cereal import car
 from common.numpy_fast import clip
+from common.realtime import DT_CTRL
 from selfdrive.car import apply_std_steer_torque_limits
 from selfdrive.car.hyundai.hyundaican import create_lkas11, create_clu11, create_lfa_mfa, \
                                              create_scc12, create_mdps12
@@ -64,9 +65,11 @@ class CarController():
     self.steer_rate_limited = False
     self.lkas11_cnt = 0
     self.scc12_cnt = 0
+
     self.resume_cnt = 0
-    self.last_resume_frame = 0
     self.last_lead_distance = 0
+    self.resume_wait_timer = 0
+
     self.turning_signal_timer = 0
     self.lkas_button_on = True
     self.longcontrol = False
@@ -150,23 +153,27 @@ class CarController():
       can_sends.append(create_scc12(self.packer, apply_accel, enabled, self.scc12_cnt, CS.scc12))
       self.scc12_cnt += 1
 
+    # fix auto resume - by neokii
     if CS.out.cruiseState.standstill:
-      # run only first time when the car stopped
       if self.last_lead_distance == 0:
-        # get the lead distance from the Radar
         self.last_lead_distance = CS.lead_distance
         self.resume_cnt = 0
-      # when lead car starts moving, create 6 RES msgs
-      elif CS.lead_distance != self.last_lead_distance and (frame - self.last_resume_frame) > 5:
+        self.resume_wait_timer = 0
+
+      elif self.resume_wait_timer > 0:
+        self.resume_wait_timer -= 1
+
+      elif CS.lead_distance != self.last_lead_distance:
         can_sends.append(create_clu11(self.packer, frame, CS.scc_bus, CS.clu11, Buttons.RES_ACCEL, clu11_speed))
         self.resume_cnt += 1
-        # interval after 6 msgs
+
         if self.resume_cnt > 5:
-          self.last_resume_frame = frame
-          self.clu11_cnt = 0
+          self.resume_cnt = 0
+          self.resume_wait_timer = int(0.2 / DT_CTRL)
+
     # reset lead distnce after the car starts moving
-    elif self.last_lead_distance != 0:
-      self.last_lead_distance = 0  
+    else:
+      self.last_lead_distance = 0
 
     # 20 Hz LFA MFA message
     if frame % 5 == 0 and self.car_fingerprint in [CAR.SONATA, CAR.PALISADE, CAR.SONATA_H, CAR.SANTA_FE]:

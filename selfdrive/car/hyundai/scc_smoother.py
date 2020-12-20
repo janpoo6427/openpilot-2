@@ -285,13 +285,14 @@ class SccSmoother:
 
       # Tuned by stonerains
 
-      if 0. < d < -lead.vRel * (7.687 + cruise_gap) * 2. and lead.vRel < -1.:
-        t = d / lead.vRel * 0.978
-        acc = -(lead.vRel / t) * CV.MS_TO_KPH * 1.8
+      if 0. < d < -lead.vRel * (8. + cruise_gap) * 2. and lead.vRel < -1.:
+        t = d / lead.vRel
+        acc = -(lead.vRel / t) * CV.MS_TO_KPH * 1.85
         override_acc = acc
         accel = (op_accel + acc) / 2.
-      else:        
-        accel = op_accel * interp(clu11_speed, [0., 30., 38., 50., 51., 60., 100.], [2.3, 3.4, 3.2, 1.7, 1.65, 1.4, 1.0])
+      else:
+        accel = op_accel * interp(clu11_speed, [0., 30., 38., 50., 51., 60., 100.],
+                                  [2.3, 3.4, 3.2, 1.7, 1.65, 1.4, 1.0])
 
     if accel > 0.:
       accel *= self.accel_gain * interp(clu11_speed, [35., 60., 100.], [1.5, 1.25, 1.2])

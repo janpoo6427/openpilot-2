@@ -1,6 +1,7 @@
 import os
 from common.params import Params
 from common.basedir import BASEDIR
+from selfdrive.car.hyundai.values import CAR_FORCE_RECOGNITION
 from selfdrive.version import comma_remote, tested_branch
 from selfdrive.car.fingerprints import eliminate_incompatible_cars, all_known_cars
 from selfdrive.car.vin import get_vin, VIN_UNKNOWN
@@ -178,6 +179,9 @@ def get_car(logcan, sendcan, has_relay=False):
   if candidate is None:
     cloudlog.warning("car doesn't match any fingerprints: %r", fingerprints)
     candidate = "mock"
+
+  if CAR_FORCE_RECOGNITION is not None:
+    candidate = CAR_FORCE_RECOGNITION
 
   CarInterface, CarController, CarState = interfaces[candidate]
   car_params = CarInterface.get_params(candidate, fingerprints, has_relay, car_fw)

@@ -81,14 +81,18 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.7
       tire_stiffness_factor = 0.385
     elif candidate in [CAR.KONA_HEV, CAR.KONA_EV]:
-      ret.mass = 1685. + STD_CARGO_KG
-      ret.wheelbase = 2.7
+      ret.mass = 1395. + STD_CARGO_KG
+      ret.wheelbase = 2.6
       tire_stiffness_factor = 0.385
     elif candidate in [CAR.IONIQ, CAR.IONIQ_EV_LTD]:
       ret.mass = 1490. + STD_CARGO_KG   #weight per hyundai site https://www.hyundaiusa.com/ioniq-electric/specifications.aspx
       ret.wheelbase = 2.7
       tire_stiffness_factor = 0.385
-    elif candidate in [CAR.GRANDEUR, CAR.GRANDEUR_HEV]:
+    elif candidate in [CAR.GRANDEUR_IG, CAR.GRANDEUR_IG_HEV]:
+      tire_stiffness_factor = 0.8
+      ret.mass = 1640. + STD_CARGO_KG
+      ret.wheelbase = 2.845
+    elif candidate in [CAR.GRANDEUR_IG_FL, CAR.GRANDEUR_IG_FL_HEV]:
       tire_stiffness_factor = 0.8
       ret.mass = 1640. + STD_CARGO_KG
       ret.wheelbase = 2.845

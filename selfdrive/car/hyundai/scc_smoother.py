@@ -99,13 +99,13 @@ class SccSmoother:
   def is_active(self, frame):
     return frame - self.started_frame <= ALIVE_COUNT + max(WAIT_COUNT)
 
-  def dispatch_cancel_buttons(self, CC, CS):
+  def dispatch_buttons(self, CC, CS):
     changed = False
     if self.last_cruise_buttons != CS.cruise_buttons:
       self.last_cruise_buttons = CS.cruise_buttons
 
       if not CS.cruiseState_enabled:
-        if CS.cruise_buttons == Buttons.CANCEL:
+        if CS.cruise_buttons == Buttons.CANCEL or CS.cruise_buttons == Buttons.GAP_DIST:
           self.state += 1
           if self.state >= CruiseState.COUNT:
             self.state = 0
@@ -172,7 +172,7 @@ class SccSmoother:
       self.reset()
       return
 
-    if self.dispatch_cancel_buttons(CC, CS):
+    if self.dispatch_buttons(CC, CS):
       self.reset()
       return
 

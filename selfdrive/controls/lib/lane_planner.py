@@ -106,8 +106,8 @@ class LanePlanner:
     lr_prob = l_prob + r_prob - l_prob * r_prob
 
     # neokii
-    #if lr_prob > 0.65:
-    #  lr_prob = min(lr_prob * 1.35, 1.0)
+    if lr_prob > 0.65:
+      lr_prob = min(lr_prob * 1.35, 1.0)
 
     d_poly_lane = (l_prob * path_from_left_lane + r_prob * path_from_right_lane) / (l_prob + r_prob + 0.0001)
     self.d_poly = lr_prob * d_poly_lane + (1.0 - lr_prob) * self.p_poly.copy()

@@ -541,6 +541,8 @@ def main():
     ("SccSmootherState", "0"),
     ("SccSmootherEnabled", "0"),
     ("SccSmootherSlowOnCurves", "0"),
+    ("SccSmootherSyncGasPressed", "0"),
+    ("SccSmootherSwitchGapOnly", "0"),
   ]
 
   # set unset params

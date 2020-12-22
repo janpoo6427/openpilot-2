@@ -80,6 +80,8 @@ keys = {
   b"SccSmootherState": [TxType.PERSISTENT],
   b"SccSmootherEnabled": [TxType.PERSISTENT],
   b"SccSmootherSlowOnCurves": [TxType.PERSISTENT],
+  b"SccSmootherSyncGasPressed": [TxType.PERSISTENT],
+  b"SccSmootherSwitchGapOnly": [TxType.PERSISTENT],
 }
 
 def ensure_bytes(v):

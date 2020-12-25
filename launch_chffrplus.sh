@@ -19,6 +19,9 @@ if [ "$(getprop persist.sys.locale)" != "ko-KR" ]; then
     setprop persist.sys.language ko
     setprop persist.sys.country KR
     setprop persist.sys.timezone Asia/Seoul
+
+    sleep 2
+    reboot
 fi
 
 if [ -z "$BASEDIR" ]; then

@@ -63,9 +63,14 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   const char *network_type = network_type_map[s->scene.thermal.getNetworkType()];
   nvgFillColor(s->vg, COLOR_WHITE);
   nvgFontSize(s->vg, 48);
-  nvgFontFaceId(s->vg, s->font_sans_regular);
+  nvgFontFaceId(s->vg, s->font_sans_bold);
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
+
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
+  nvgFillColor(s->vg, COLOR_YELLOW);
+  nvgFontSize(s->vg, 46);
+  nvgFontFaceId(s->vg, s->font_sans_bold);
+  nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
 
   std::string ip = s->scene.thermal.getWifiIpAddress();
   nvgTextBox(s->vg, network_x-20, network_y + 60, 250, ip.c_str(), NULL);
@@ -162,17 +167,17 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
   const int panda_y_offset = 32 + 148;
 
   int panda_severity = 0;
-  std::string panda_message = "VEHICLE\nONLINE";
+  std::string panda_message = "차량\n인식됨";
   if (s->scene.hwType == cereal::HealthData::HwType::UNKNOWN) {
     panda_severity = 2;
-    panda_message = "NO\nVEHICLE";
+    panda_message = "차량\n인식안됨";
   } else if (s->started) {
     if (s->scene.satelliteCount < 6) {
       panda_severity = 1;
-      panda_message = "VEHICLE\nNO GPS";
+      panda_message = "블랙\nGPS 불량";
     } else {
       panda_severity = 0;
-      panda_message = "VEHICLE\nGOOD GPS";
+      panda_message = "블랙\nGPS 양호";
     }
   }
   ui_draw_sidebar_metric(s, NULL, NULL, panda_severity, panda_y_offset, panda_message.c_str());
@@ -180,9 +185,9 @@ static void ui_draw_sidebar_panda_metric(UIState *s) {
 
 static void ui_draw_sidebar_connectivity(UIState *s) {
   static std::map<NetStatus, std::pair<const char *, int>> connectivity_map = {
-    {NET_ERROR, {"CONNECT\nERROR", 2}},
-    {NET_CONNECTED, {"CONNECT\nONLINE", 0}},
-    {NET_DISCONNECTED, {"CONNECT\nOFFLINE", 1}},
+    {NET_ERROR, {"네트워크\n에러", 2}},
+    {NET_CONNECTED, {"네트워크\n연결됨", 0}},
+    {NET_DISCONNECTED, {"네트워크\n연결안됨", 1}},
   };
   auto net_params = connectivity_map[s->scene.athenaStatus];
   ui_draw_sidebar_metric(s, NULL, NULL, net_params.second, 180+158, net_params.first);

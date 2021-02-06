@@ -80,6 +80,12 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.80
       ret.steerRatio = 13.75
       tire_stiffness_factor = 0.5
+    
+    elif candidate == CAR.KIA_SELTOS:
+      ret.mass = 1440. + STD_CARGO_KG
+      ret.wheelbase = 2.63
+      ret.steerRatio = 13.75
+      tire_stiffness_factor = 0.5
 
     elif candidate == CAR.KIA_STINGER:
 

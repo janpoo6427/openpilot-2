@@ -36,6 +36,7 @@ class CAR:
   SONATA_H = "HYUNDAI SONATA HYBRID 2020"
   SONATA_TURBO = "HYUNDAI SONATA TURBO"
   GRANDEUR = "GRANDEUR IG 2017"
+  KIA_SELTOS = "KIA SELTOS 2019"
 
 class Buttons:
   NONE = 0
@@ -161,6 +162,8 @@ FINGERPRINTS = {
   CAR.KIA_CEED: [{
     67: 8, 127: 8, 304: 8, 320: 8, 339: 8, 354: 3, 356: 4, 544: 8, 576: 8, 593: 8, 608: 8, 688: 5, 809: 8, 832: 8, 854: 7, 870: 7, 871: 8, 872: 8, 897: 8, 902: 8, 903: 8, 905: 8, 909: 8, 916: 8, 1040: 8, 1042: 8, 1056: 8, 1057: 8, 1078: 4, 1107: 5, 1136: 8, 1151: 6, 1155: 8, 1157: 4, 1168: 7, 1170: 8, 1173: 8, 1183: 8, 1186: 2, 1191: 2, 1225: 8, 1265: 4, 1280: 4, 1287: 4, 1290: 8, 1292: 8, 1294: 8, 1312: 8, 1322: 8, 1342: 6, 1345: 8, 1348: 8, 1363: 8, 1369: 8, 1384: 8, 1394: 8, 1407: 8, 1414: 3, 1427: 6, 1456: 4, 2015: 8
     }],
+  CAR.KIA_SELTOS: [{
+    }],
   CAR.SONATA_TURBO: [{
     66: 8, 67: 8, 68: 8, 127: 8, 273: 8, 274: 8, 275: 8, 339: 8, 356: 4, 399: 8, 512: 6, 544: 8, 593: 8, 608: 8, 688: 5, 790: 8, 809: 8, 832: 8, 897: 8, 899: 8, 902: 8, 903: 6, 912: 7, 916: 8, 1040: 8, 1056: 8, 1057: 8, 1078: 4, 1151: 6, 1168: 7, 1170: 8, 1265: 4, 1268: 8, 1280: 1, 1287: 4, 1290: 8, 1292: 8, 1312: 8, 1314: 8, 1322: 8, 1331: 8, 1332: 8, 1333: 8, 1345: 8, 1348: 8, 1349: 8, 1351: 8, 1353: 8, 1363: 8, 1365: 8, 1366: 8, 1367: 8, 1369: 8, 1407: 8, 1414: 3, 1415: 8, 1419: 8, 1427: 6, 1440: 8, 1456: 4, 1460: 8, 1470: 8, 1471: 8, 1472: 8, 1491: 8, 1530: 8, 1532: 5, 2016: 8, 2024: 8
     },
@@ -198,7 +201,7 @@ CHECKSUM = {
 
 FEATURES = {
   # Use Cluster for Gear Selection, rather than Transmission
-  "use_cluster_gears": [CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.GRANDEUR],
+  "use_cluster_gears": [CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.GRANDEUR, CAR.KIA_SELTOS],
   # Use TCU Message for Gear Selection
   "use_tcu_gears": [CAR.KIA_OPTIMA, CAR.SONATA_TURBO],
   # Use E_GEAR Message for Gear Selection
@@ -232,6 +235,7 @@ DBC = {
   CAR.KIA_NIRO_EV: dbc_dict('hyundai_kia_generic', None),
   CAR.SONATA_TURBO: dbc_dict('hyundai_kia_generic', None),
   CAR.GRANDEUR: dbc_dict('hyundai_kia_generic', None),
+  CAR.KIA_SELTOS: dbc_dict('hyundai_kia_generic', None),
 }
 
 STEER_THRESHOLD = 150

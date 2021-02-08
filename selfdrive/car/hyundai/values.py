@@ -208,7 +208,17 @@ FEATURES = {
   # Use E_GEAR Message for Gear Selection
   "use_elect_gears": [CAR.KIA_OPTIMA_H, CAR.IONIQ_EV_LTD, CAR.KONA_EV, CAR.SONATA_H, CAR.KIA_NIRO_EV], 
   # Use E_EMS11 Message for Gas and Brake for Hybrid/ELectric
-  "use_elect_ems": [CAR.SONATA_H, CAR.IONIQ_EV_LTD],                                      
+  "use_elect_ems": [CAR.SONATA_H, CAR.IONIQ_EV_LTD],    
+
+  "use_fca": {CAR.SONATA, CAR.ELANTRA, CAR.ELANTRA_GT_I30, CAR.STINGER, CAR.IONIQ, CAR.KONA, CAR.KONA_EV, CAR.FORTE,
+              CAR.PALISADE, CAR.GENESIS_G70, CAR.KIA_SELTOS},
+
+  #"use_bsm": {CAR.SONATA, CAR.PALISADE, CAR.GENESIS, CAR.GENESIS_G70, CAR.GENESIS_G80, CAR.GENESIS_G90,
+            #  CAR.GENESIS_G90_L, CAR.KONA},
+
+  #"use_blinker_flash": {CAR.SONATA_LF_TURBO},
+
+ # "use_ldws": False,                                  
 }
 
 DBC = {

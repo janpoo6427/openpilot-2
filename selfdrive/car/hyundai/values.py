@@ -48,6 +48,7 @@ class CAR:
   CEED = "KIA CEED 2019"
   CARDENZA = "KIA K7 2016-2019"
   CARDENZA_HEV = "KIA K7 HEV 2016-2019"
+  KIA_SELTOS = "KIA SELTOS 2019"
 
 class Buttons:
   NONE = 0
@@ -228,7 +229,10 @@ FINGERPRINTS = {
     67: 8, 68: 8, 127: 8, 304: 8, 320: 8, 339: 8, 356: 4, 544: 8, 546: 8, 593: 8, 608: 8, 688: 5, 809: 8, 832: 8, 854: 7, 870: 7, 871: 8, 872: 8, 897: 8, 902: 8, 903: 8, 916: 8, 1040: 8, 1056: 8, 1057: 8, 1078: 4, 1107: 5, 1136: 8, 1151: 6, 1156: 8, 1162: 4, 1168: 7, 1170: 8, 1173: 8, 1265: 4, 1280: 1, 1287: 4, 1290: 8, 1292: 8, 1294: 8, 1312: 8, 1322: 8, 1345: 8, 1348: 8, 1363: 8, 1369: 8, 1378: 4, 1384: 8, 1407: 8, 1419: 8, 1427: 6, 1444: 8, 1456: 4, 1470: 8
     },{
     67: 8, 68: 8, 127: 8, 304: 8, 320: 8, 339: 8, 356: 4, 544: 8, 546: 8, 608: 8, 809: 8, 832: 8, 854: 7, 870: 7, 871: 8, 872: 8, 902: 8, 903: 8, 916: 8, 1040: 8, 1056: 8, 1057: 8, 1078: 4, 1107: 5, 1136: 8, 1151: 6, 1156: 8, 1162: 4, 1168: 7, 1170: 8, 1173: 8, 1265: 4, 1280: 1, 1287: 4, 1290: 8, 1292: 8, 1294: 8, 1312: 8, 1322: 8, 1345: 8, 1348: 8, 1363: 8, 1369: 8, 1378: 4, 1384: 8, 1407: 8, 1419: 8, 1427: 6, 1444: 8, 1456: 4, 1470: 8
-  }],  
+  }],
+CAR.KIA_SELTOS: [{
+67: 8, 127: 8, 304: 8, 320: 8, 339: 8, 354: 8, 356: 4, 516: 8, 524: 8, 528: 8, 544: 8, 593: 8, 608: 8, 688: 6, 809: 8, 832: 8, 854: 8, 870: 7, 871: 8, 872: 8, 897: 8, 902: 8, 905: 8, 909: 8, 910: 5, 911: 5, 913: 8, 916: 8, 1040: 8, 1042: 8, 1056: 8, 1057: 8, 1078: 4, 1107: 5, 1114: 8, 1136: 8, 1145: 8, 1151: 8, 1155: 8, 1156: 8, 1157: 4, 1162: 8, 1164: 8, 1168: 8, 1170: 8, 1173: 8, 1186: 2, 1191: 2, 1225: 8, 1265: 4, 1280: 8, 1287: 4, 1290: 8, 1292: 8, 1294: 8, 1312: 8, 1322: 8, 1342: 6, 1345: 8, 1348: 8, 1363: 8, 1369: 8, 1378: 8, 1379: 8, 1384: 8, 1394: 8, 1407: 8, 1414: 3, 1419: 8, 1427: 6, 1446: 8, 1456: 4, 1470: 8, 1485: 8, 1988: 8, 1996: 8, 2000: 8, 2004: 8, 2008: 8, 2012: 8
+    }],  
   CAR.CARDENZA_HEV: [{
     68: 8, 127: 8, 304: 8, 320: 8, 339: 8, 352: 8, 356: 4, 544: 8, 576: 8, 593: 8, 688: 5, 832: 8, 865: 8, 881: 8, 882: 8, 897: 8, 902: 8, 903: 8, 905: 8, 909: 8, 913: 8, 916: 8, 1040: 8, 1042: 8, 1056: 8, 1057: 8, 1078: 4, 1096: 8, 1102: 8, 1108: 8, 1136: 6, 1138: 5, 1151: 8, 1155: 8, 1156: 8, 1157: 4, 1162: 8, 1164: 8, 1168: 7, 1173: 8, 1180: 8, 1186: 2, 1191: 2, 1210: 8, 1227: 8, 1265: 4, 1268: 8, 1280: 1, 1287: 4, 1290: 8, 1291: 8, 1292: 8, 1294: 8, 1312: 8, 1322: 8, 1342: 6, 1343: 8, 1345: 8, 1348: 8, 1355: 8, 1363: 8, 1369: 8, 1371: 8, 1378: 8, 1379: 8, 1407: 8, 1419: 8, 1427: 6, 1429: 8, 1430: 8, 1448: 8, 1456: 4, 1470: 8, 1476: 8, 1535: 8
   }]
@@ -391,7 +395,7 @@ CHECKSUM = {
 
 FEATURES = {
   # Use Cluster for Gear Selection, rather than Transmission
-  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR]),     
+  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR,CAR.KIA_SELTOS]),     
   # Use TCU Message for Gear Selection
   "use_tcu_gears": set([CAR.OPTIMA, CAR.SONATA19, CAR.VELOSTER]),
   # Use E_GEAR Message for Gear Selection
@@ -399,13 +403,13 @@ FEATURES = {
   # Use E_EMS11 Message for Gas and Brake for Hybrid/ELectric
   "use_elect_ems": set([CAR.OPTIMA_HEV, CAR.IONIQ_EV_LTD, CAR.KONA_EV, CAR.SONATA_HEV, CAR.NIRO_EV, CAR.CARDENZA_HEV, CAR.GRANDEUR_HEV]),
   # send LFA MFA message for new HKG models
-  "send_lfa_mfa": set([CAR.SONATA, CAR.PALISADE, CAR.SONATA_HEV, CAR.SANTA_FE, CAR.NIRO_EV]),
+  "send_lfa_mfa": set([CAR.SONATA, CAR.PALISADE, CAR.SONATA_HEV, CAR.SANTA_FE, CAR.NIRO_EV,CAR.KIA_SELTOS]),
   "has_scc13": set([]), 
   "has_scc14": set([]), 
   # these cars use the FCA11 message for the AEB and FCW signals, all others use SCC12
-  "use_fca": set([CAR.SONATA, CAR.ELANTRA, CAR.ELANTRA_GT_I30, CAR.STINGER, CAR.IONIQ, CAR.KONA, CAR.KONA_EV, CAR.FORTE, CAR.PALISADE, CAR.GENESIS_G70]),
+  "use_fca": set([CAR.SONATA, CAR.ELANTRA, CAR.ELANTRA_GT_I30, CAR.STINGER, CAR.IONIQ, CAR.KONA, CAR.KONA_EV, CAR.FORTE, CAR.PALISADE, CAR.GENESIS_G70,CAR.KIA_SELTOS]),
 
-  "use_bsm": set([CAR.SONATA, CAR.PALISADE, CAR.GENESIS, CAR.GENESIS_G70, CAR.GENESIS_G80, CAR.GENESIS_G90, CAR.KONA]),
+  "use_bsm": set([CAR.SONATA, CAR.PALISADE, CAR.GENESIS, CAR.GENESIS_G70, CAR.GENESIS_G80, CAR.GENESIS_G90, CAR.KONA,CAR.KIA_SELTOS]),
 }
 
 DBC = {
@@ -442,6 +446,7 @@ DBC = {
   CAR.NIRO_HEV: dbc_dict('hyundai_kia_generic', None),
   CAR.CEED: dbc_dict('hyundai_kia_generic', None),
   CAR.CARDENZA: dbc_dict('hyundai_kia_generic', None),
+  CAR.KIA_SELTOS: dbc_dict('hyundai_kia_generic', None),
   CAR.CARDENZA_HEV: dbc_dict('hyundai_kia_generic', None),
 }
 

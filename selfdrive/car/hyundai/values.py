@@ -395,9 +395,9 @@ CHECKSUM = {
 
 FEATURES = {
   # Use Cluster for Gear Selection, rather than Transmission
-  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR,CAR.KIA_SELTOS]),     
+  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR]),     
   # Use TCU Message for Gear Selection
-  "use_tcu_gears": set([CAR.OPTIMA, CAR.SONATA19, CAR.VELOSTER]),
+  "use_tcu_gears": set([CAR.OPTIMA, CAR.SONATA19, CAR.VELOSTER, CAR.KIA_SELTOS]),
   # Use E_GEAR Message for Gear Selection
   "use_elect_gears": set([CAR.OPTIMA_HEV, CAR.IONIQ_EV_LTD, CAR.KONA_EV, CAR.SONATA_HEV, CAR.NIRO_EV, CAR.CARDENZA_HEV, CAR.GRANDEUR_HEV]),
   # Use E_EMS11 Message for Gas and Brake for Hybrid/ELectric

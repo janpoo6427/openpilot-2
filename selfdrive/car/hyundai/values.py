@@ -395,7 +395,7 @@ CHECKSUM = {
 
 FEATURES = {
   # Use Cluster for Gear Selection, rather than Transmission
-  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR]),     
+  "use_cluster_gears": set([CAR.ELANTRA, CAR.KONA, CAR.ELANTRA_GT_I30, CAR.CARDENZA, CAR.NIRO_HEV, CAR.GRANDEUR, CAR.KIA_SELTOS]),     
   # Use TCU Message for Gear Selection
   "use_tcu_gears": set([CAR.OPTIMA, CAR.SONATA19, CAR.VELOSTER, CAR.KIA_SELTOS]),
   # Use E_GEAR Message for Gear Selection
@@ -403,7 +403,7 @@ FEATURES = {
   # Use E_EMS11 Message for Gas and Brake for Hybrid/ELectric
   "use_elect_ems": set([CAR.OPTIMA_HEV, CAR.IONIQ_EV_LTD, CAR.KONA_EV, CAR.SONATA_HEV, CAR.NIRO_EV, CAR.CARDENZA_HEV, CAR.GRANDEUR_HEV]),
   # send LFA MFA message for new HKG models
-  "send_lfa_mfa": set([CAR.SONATA, CAR.PALISADE, CAR.SONATA_HEV, CAR.SANTA_FE, CAR.NIRO_EV,CAR.KIA_SELTOS]),
+  "send_lfa_mfa": set([CAR.SONATA, CAR.PALISADE, CAR.SONATA_HEV, CAR.SANTA_FE, CAR.NIRO_EV]),
   "has_scc13": set([]), 
   "has_scc14": set([]), 
   # these cars use the FCA11 message for the AEB and FCW signals, all others use SCC12

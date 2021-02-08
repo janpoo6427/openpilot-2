@@ -135,12 +135,12 @@ class CarState(CarStateBase):
       else:
         ret.gearShifter = GearShifter.unknown
 
-if self.CP.carFingerprint in FEATURES["use_fca"]:
-      ret.stockAeb = cp.vl["FCA11"]['FCA_CmdAct'] != 0
-      ret.stockFcw = cp.vl["FCA11"]['CF_VSM_Warn'] == 2
-    else:
-      ret.stockAeb = cp.vl["SCC12"]['AEB_CmdAct'] != 0
-      ret.stockFcw = cp.vl["SCC12"]['CF_VSM_Warn'] == 2
+#if self.CP.carFingerprint in FEATURES["use_fca"]:
+ #     ret.stockAeb = cp.vl["FCA11"]['FCA_CmdAct'] != 0
+  #    ret.stockFcw = cp.vl["FCA11"]['CF_VSM_Warn'] == 2
+   # else:
+    #  ret.stockAeb = cp.vl["SCC12"]['AEB_CmdAct'] != 0
+     # ret.stockFcw = cp.vl["SCC12"]['CF_VSM_Warn'] == 2
 
 
     # Blind Spot Detection and Lane Change Assist signals
@@ -330,12 +330,12 @@ if self.CP.carFingerprint in FEATURES["use_fca"]:
       checks += [
         ("E_EMS11", 100),
       ]
-    if CP.carFingerprint in FEATURES["use_fca"]:
-      signals += [
-        ("FCA_CmdAct", "FCA11", 0),
-        ("CF_VSM_Warn", "FCA11", 0),
-      ]
-      checks += [("FCA11", 50)]
+   # if CP.carFingerprint in FEATURES["use_fca"]:
+     # signals += [
+     #   ("FCA_CmdAct", "FCA11", 0),
+     #   ("CF_VSM_Warn", "FCA11", 0),
+    #  ]
+    #  checks += [("FCA11", 50)]
 
     return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, 0)
 
